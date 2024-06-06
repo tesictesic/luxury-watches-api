@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.UseCases.Commands
+namespace Application.UseCases.Commands.BrandsCommands
 {
-    public interface ICreateGender:ICommand<CreateGenderDTO>
+    public interface IUpdateBrandCommand:ICommand<BrandDTO>
     {
+
     }
 }

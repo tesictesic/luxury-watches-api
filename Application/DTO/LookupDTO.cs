@@ -6,16 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.DTO
 {
-    public  class GendersDTO : BaseDTO
+    public class LookupDTO:BaseDTO
     {
         public string Name { get; set; }
-    }
-    public class CreateGenderDTO : GendersDTO
-    {
-        
-    }
-    public class UpdateGenderDTO : GendersDTO
-    {
-
     }
 }

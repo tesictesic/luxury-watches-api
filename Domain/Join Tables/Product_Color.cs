@@ -12,7 +12,7 @@ namespace Domain.Join_Tables
         public int Product_id { get; set; }
         public int Color_id { get; set; }
 
-        public Product Product { get; set; }
-        public Color Color { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual Color Color { get; set; }
     }
 }

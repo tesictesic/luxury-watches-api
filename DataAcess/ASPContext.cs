@@ -19,7 +19,7 @@ namespace DataAcess
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connection_string);
+            optionsBuilder.UseSqlServer(connection_string).UseLazyLoadingProxies();
             base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

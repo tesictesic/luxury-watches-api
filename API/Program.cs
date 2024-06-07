@@ -2,12 +2,14 @@ using Application;
 using Application.Logging;
 using Application.UseCases.Commands.BrandsCommands;
 using Application.UseCases.Commands.GenderCommands;
+using Application.UseCases.Commands.UserCommands;
 using Application.UseCases.Queries;
 using DataAcess;
 using Implementation;
 using Implementation.Logging;
 using Implementation.UseCases.Commands.Brands;
 using Implementation.UseCases.Commands.Genders;
+using Implementation.UseCases.Commands.Users;
 using Implementation.UseCases.Queries;
 using Implementation.Validations;
 
@@ -32,6 +34,8 @@ builder.Services.AddTransient<CreateUpdateBrandsDTOValdiation>();
 builder.Services.AddTransient<IUpdateGenderCommand,EfUpdateGender>();
 builder.Services.AddTransient<ICreateBrandCommand, EfCreateBrand>();
 builder.Services.AddTransient<IUpdateBrandCommand, EfUpdateBrand>();
+builder.Services.AddTransient<UserRegisterDTOValidation>();
+builder.Services.AddTransient<IUserRegisterCommand, EfUserRegister>();
 
 
 

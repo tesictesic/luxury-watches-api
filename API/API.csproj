@@ -17,4 +17,10 @@
     <ProjectReference Include="..\Implementation\Implementation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\products\" />
+    <Folder Include="wwwroot\users\" />
+    <Folder Include="wwwroot\temp\" />
+  </ItemGroup>
+
 </Project>

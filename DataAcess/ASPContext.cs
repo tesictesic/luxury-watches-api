@@ -29,7 +29,6 @@ namespace DataAcess
         }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Brand> Brands { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Specification> Specifications { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -39,5 +38,6 @@ namespace DataAcess
         public DbSet<User> Users { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Product_Cart> Product_Carts { get; set;}
+        public DbSet<UserUseCase> UserUseCases { get; set; }
     }
 }

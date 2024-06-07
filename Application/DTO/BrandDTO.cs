@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTO
 {
-    public class BrandDTO:LookupDTO
+    public class BrandDTO : LookupDTO
     {
         public string Description { get; set; }
     }

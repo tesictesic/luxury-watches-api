@@ -14,11 +14,10 @@ namespace Domain
         public string Email { get; set; }
         public string Password { get; set; }
         public string Picture { get; set; }
-        public int Role_id { get; set; }
-        public bool isBanned { get; set; }
+      
 
-        public virtual Role Role { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<UserUseCase> UserUseCases { get;set; }
 
 
     }

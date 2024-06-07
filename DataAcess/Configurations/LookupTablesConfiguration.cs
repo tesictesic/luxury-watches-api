@@ -23,13 +23,6 @@ namespace DataAcess.Configurations
             builder.Property(x => x.Description).HasMaxLength(500);
         }
     }
-    internal class RoleConfiguration : LookupNameConfiguration<Role>
-    {
-        public override void Configure(EntityTypeBuilder<Role> builder)
-        {
-            base.Configure(builder);
-        }
-    }
     internal class SpecificationConfiguration : LookupNameConfiguration<Specification>
     {
         public override void Configure(EntityTypeBuilder<Specification> builder)

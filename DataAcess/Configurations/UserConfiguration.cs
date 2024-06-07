@@ -19,15 +19,9 @@ namespace DataAcess.Configurations
             builder.Property(x=>x.Email).IsRequired().HasMaxLength(100);
             builder.Property(x=>x.Password).IsRequired().HasMaxLength(100);
             builder.Property(x=>x.Picture).IsRequired().HasMaxLength(100);
-            builder.Property(x=>x.isBanned).HasDefaultValue(false);
-
             builder.HasIndex(x => x.Email).IsUnique();
             builder.HasIndex(x => x.Password);
 
-            builder.HasOne(x => x.Role)
-                   .WithMany(x => x.Users)
-                   .HasForeignKey(x => x.Role_id)
-                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Implementation.Logging
 {
-    public class ConsoleUseCaseLogger : IExceptionLogger
+    public class ExceptionLogger : IExceptionLogger
     {
         public void Log(Exception ex)
         {

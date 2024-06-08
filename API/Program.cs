@@ -1,4 +1,5 @@
 using Application;
+using Application.Email;
 using Application.Logging;
 using Application.UseCases.Commands.BrandsCommands;
 using Application.UseCases.Commands.GenderCommands;
@@ -6,6 +7,7 @@ using Application.UseCases.Commands.UserCommands;
 using Application.UseCases.Queries;
 using DataAcess;
 using Implementation;
+using Implementation.Email;
 using Implementation.Logging;
 using Implementation.UseCases.Commands.Brands;
 using Implementation.UseCases.Commands.Genders;
@@ -36,6 +38,7 @@ builder.Services.AddTransient<ICreateBrandCommand, EfCreateBrand>();
 builder.Services.AddTransient<IUpdateBrandCommand, EfUpdateBrand>();
 builder.Services.AddTransient<UserRegisterDTOValidation>();
 builder.Services.AddTransient<IUserRegisterCommand, EfUserRegister>();
+builder.Services.AddTransient<IEmailSender,SMTPEmailSender>();
 
 
 
@@ -43,7 +46,7 @@ builder.Services.AddTransient<IUserRegisterCommand, EfUserRegister>();
 
 
 
-builder.Services.AddTransient<IExceptionLogger, ConsoleUseCaseLogger>();
+builder.Services.AddTransient<IExceptionLogger, ExceptionLogger>();
 builder.Services.AddTransient<IUseCaseLogger, UseCaseLogger>();
 
 

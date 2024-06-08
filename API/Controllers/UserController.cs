@@ -30,6 +30,7 @@ namespace API.Controllers
         public IActionResult Post([FromForm] RegisterDTO registerDTO, [FromServices] IUserRegisterCommand command)
         {
             try
+            
             {
                 _useCaseHandler.HandleCommand(command, registerDTO);
                 return StatusCode(201);

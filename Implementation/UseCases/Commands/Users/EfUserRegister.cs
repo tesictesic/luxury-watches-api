@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.Email;
 using Application.UseCases.Commands.UserCommands;
 using DataAcess;
 using Domain;
@@ -15,9 +16,11 @@ namespace Implementation.UseCases.Commands.Users
     public class EfUserRegister : EfUseCase,IUserRegisterCommand
     {
         private readonly UserRegisterDTOValidation validations;
-        public EfUserRegister(UserRegisterDTOValidation validations,ASPContext context) : base(context)
+        private readonly IEmailSender emailSender;
+        public EfUserRegister(UserRegisterDTOValidation validations,IEmailSender emailSender,ASPContext context) : base(context)
         {
             this.validations=validations;
+            this.emailSender=emailSender;
         }
 
         public int Id => 6;
@@ -55,6 +58,13 @@ namespace Implementation.UseCases.Commands.Users
             };
             Context.Add(user);
             Context.SaveChanges();
+            EmailDTO email = new EmailDTO
+            {
+                Subject = "Registration",
+                Content = "<h1>Successfull registration!</h1>",
+                SendTo=data.Email
+            };
+            emailSender.SendEmail(email);
         }
     }
 }

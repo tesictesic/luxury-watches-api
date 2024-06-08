@@ -31,19 +31,19 @@ namespace Implementation
                 throw new UnauthorizedAccessException();
             }
             
-            UserCaseLog log = new UserCaseLog
-            {
-                Username = actor.GetActor().FirstName + " " + actor.GetActor().LastName, 
-                UserCaseName = command.Name,
-                UserCaseData = data
-            };
-            iloger.Log(log);
             try
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
                 command.Execute(data);
                 stopwatch.Stop();
+                UserCaseLog log = new UserCaseLog
+                {
+                    Username = actor.GetActor().FirstName + " " + actor.GetActor().LastName,
+                    UseCaseName = command.Name,
+                    UserCaseData = data
+                };
+                iloger.Log(log);
                 Console.WriteLine(command.Name+ "Duration:"+ stopwatch.ElapsedMilliseconds+" ms.");
                 Console.WriteLine("Actor:"+actor.GetActor().FirstName+" "+actor.GetActor().LastName+" "+actor.GetActor().Email);
             }

@@ -13,7 +13,6 @@ namespace Application.Logging
     public class UserCaseLog
     {
         public string Username { get; set; }
-        public string UserCaseName { get; set; }
         public object UserCaseData { get; set; }
         public string UseCaseName { get; set; }
     }

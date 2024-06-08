@@ -39,5 +39,6 @@ namespace DataAcess
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Product_Cart> Product_Carts { get; set;}
         public DbSet<UserUseCase> UserUseCases { get; set; }
+        public DbSet<UserUseCaseLog> UserUseCaseLogs { get; set; }
     }
 }

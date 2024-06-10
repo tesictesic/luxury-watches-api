@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Implementation
 {
@@ -26,10 +29,7 @@ namespace Implementation
         //vazi za bilo koju komandu, podaci koji ulaze;
         public void HandleCommand<TData>(ICommand<TData> command , TData data)
         {
-            if (!actor.GetActor().AllowedUseCases.Contains(command.Id))
-            {
-                throw new UnauthorizedAccessException();
-            }
+            CheckActorUsesCases(command);
             
             try
             {
@@ -37,13 +37,11 @@ namespace Implementation
                 stopwatch.Start();
                 command.Execute(data);
                 stopwatch.Stop();
-                UserCaseLog log = new UserCaseLog
+                if (actor.GetActor().Id != 0)
                 {
-                    Username = actor.GetActor().FirstName + " " + actor.GetActor().LastName,
-                    UseCaseName = command.Name,
-                    UserCaseData = data
-                };
-                iloger.Log(log);
+                    LoggingUseCase(command, data);
+                }
+               
                 Console.WriteLine(command.Name+ "Duration:"+ stopwatch.ElapsedMilliseconds+" ms.");
                 Console.WriteLine("Actor:"+actor.GetActor().FirstName+" "+actor.GetActor().LastName+" "+actor.GetActor().Email);
             }
@@ -55,12 +53,19 @@ namespace Implementation
         }
         public TResult HandleQuery<TResult, TSearch>(IQuery<TSearch, TResult> query, TSearch search)
         {
+            CheckActorUsesCases(query);
             try
             {
+               
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
                var result=query.Execute(search);
                 stopwatch.Stop();
+                if (actor.GetActor().Id != 0)
+                {
+                    LoggingUseCase(query, search);
+                }
+                
                 Console.WriteLine(query.Name + "Duration:" + stopwatch.ElapsedMilliseconds + " ms.");
                 return result;
             }
@@ -69,6 +74,23 @@ namespace Implementation
                 _logger.Log(ex);
                 throw;
             }
+        }
+        private void CheckActorUsesCases(IUseCase useCase)
+        {
+            if (!actor.GetActor().AllowedUseCases.Contains(useCase.Id))
+            {
+                throw new UnauthorizedAccessException();
+            }
+        }
+        private void LoggingUseCase(IUseCase useCase,object data)
+        {
+            UserCaseLog log = new UserCaseLog
+            {
+                Username = actor.GetActor().FirstName + " " + actor.GetActor().LastName,
+                UseCaseName = useCase.Name,
+                UserCaseData = data
+            };
+            iloger.Log(log);
         }
     }
 }

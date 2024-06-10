@@ -17,7 +17,7 @@ namespace Implementation
 
         public string Email { get; set; }
 
-        public IEnumerable<int> AllowedUseCases => new List<int> { 1,2,3,4,5,6,7,8,9,10 };
+        public IEnumerable<int> AllowedUseCases {get;set;}
     }
     public class UnathorizedActor : IApplicationActor
     {
@@ -29,7 +29,7 @@ namespace Implementation
 
         public string Email => "/";
 
-        public IEnumerable<int> AllowedUseCases =>new List<int> { 0};
+        public IEnumerable<int> AllowedUseCases =>new List<int> {7};
     }
     
 }

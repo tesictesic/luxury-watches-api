@@ -4,6 +4,7 @@ using Application.UseCases.Commands.GenderCommands;
 using Application.UseCases.Queries;
 using DataAcess;
 using Implementation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,6 +23,7 @@ namespace API.Controllers
         // GET: api/<GenderController>
 
         [HttpGet]
+        [Authorize]
         public IActionResult Get([FromQuery] GenderSearch searchDTO, [FromServices] IGetGenderQuery query)
         {
             try
@@ -37,6 +39,7 @@ namespace API.Controllers
 
         // POST api/<GenderController>
         [HttpPost]
+        [Authorize]
         public IActionResult Post([FromBody] GenderDTO genderDTO, [FromServices] ICreateGenderCommand command)
         {
             try

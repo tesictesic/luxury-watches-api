@@ -8,6 +8,6 @@ namespace Application.DTO.Searches
 {
     public class GenderSearch:BaseSearchDTO
     {
-
+        public string? Keyword { get; set; }
     }
 }

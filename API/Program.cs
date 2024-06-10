@@ -1,3 +1,4 @@
+using API.Core;
 using Application;
 using Application.Email;
 using Application.Logging;
@@ -14,6 +15,9 @@ using Implementation.UseCases.Commands.Genders;
 using Implementation.UseCases.Commands.Users;
 using Implementation.UseCases.Queries;
 using Implementation.Validations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +29,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // moji dodaci
+builder.Services.AddHttpContextAccessor(); // preko ovoga mozemo da pristupimo hederu http-a i da izvuicemo podatke
 builder.Services.AddScoped<ASPContext>();
 builder.Services.AddTransient<UseCaseHandler>();
 builder.Services.AddTransient<IApplicationActor, Actor>();
-builder.Services.AddTransient<IApplicationActorProvider,FakeActor>();
+builder.Services.AddTransient<IApplicationActorProvider>(x =>
+{
+    var accessor = x.GetService<IHttpContextAccessor>();
+
+    var request = accessor.HttpContext.Request;
+
+    var authHeader = request.Headers.Authorization.ToString();
+
+    var context = x.GetService<ASPContext>();
+
+    return new JwtAuthorization(authHeader, context);
+});
 builder.Services.AddTransient<IGetGenderQuery,EfGetGender>(); // kada neko zatrazi IGetGender (aplikaciju) mi mu vratimo EfGetGende (implementaciju) klasu.
 builder.Services.AddTransient<ICreateGenderCommand, EfCreateGender>();
 builder.Services.AddTransient<CreateUpdateGenderDTOValidation>();
@@ -36,18 +52,35 @@ builder.Services.AddTransient<CreateUpdateBrandsDTOValdiation>();
 builder.Services.AddTransient<IUpdateGenderCommand,EfUpdateGender>();
 builder.Services.AddTransient<ICreateBrandCommand, EfCreateBrand>();
 builder.Services.AddTransient<IUpdateBrandCommand, EfUpdateBrand>();
+builder.Services.AddTransient<IGetAuditLogQuery,EfGetAuditLog>();
 builder.Services.AddTransient<UserRegisterDTOValidation>();
 builder.Services.AddTransient<IUserRegisterCommand, EfUserRegister>();
 builder.Services.AddTransient<IEmailSender,SMTPEmailSender>();
-
-
-
-
-
-
-
 builder.Services.AddTransient<IExceptionLogger, ExceptionLogger>();
 builder.Services.AddTransient<IUseCaseLogger, UseCaseLogger>();
+builder.Services.AddTransient<JWTManager>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(cfg =>
+{
+    cfg.RequireHttpsMetadata = false;
+    cfg.SaveToken = true;
+    cfg.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = "luxury_watches_api",
+        ValidateIssuer = true,
+        ValidAudience = "Any",
+        ValidateAudience = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("31kldkasldlaskdlkalk3241l414kldkasldklaskdlsakdlkasl34214214")),
+        ValidateIssuerSigningKey = true,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 
 var app = builder.Build();
@@ -60,7 +93,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

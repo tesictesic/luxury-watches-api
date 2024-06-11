@@ -30,12 +30,5 @@ namespace DataAcess.Configurations
             base.Configure(builder);
         }
     }
-    internal class ColorConfiguration : LookupNameConfiguration<Color>
-    {
-        public override void Configure(EntityTypeBuilder<Color> builder)
-        {
-            base.Configure(builder);
-            builder.Property(x => x.Class).IsRequired().HasMaxLength(100);
-        }
-    }
+    
 }

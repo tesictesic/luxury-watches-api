@@ -12,21 +12,23 @@ using System.Threading.Tasks;
 
 namespace Implementation.UseCases.Commands.Colors
 {
-    public class EfCreateColor : EfUseCase,ICreateColorCommand
+    public class EfUpdateColor : EfUseCase,IUpdateColorCommand
     {
-        private readonly CreateColorDTOValidation validations;
-        public EfCreateColor(CreateColorDTOValidation validations,ASPContext context):base(context) 
+        private UpdateColorDTOValidation validation;
+        public EfUpdateColor(UpdateColorDTOValidation valid,ASPContext context) : base(context)
         {
-            this.validations=validations;
+            this.validation=valid;
         }
-        public int Id => 10;
+
+        public int Id => 14;
 
         public string Name => this.GetType().Name;
 
         public void Execute(ColorDTO data)
         {
-            this.validations.ValidateAndThrow(data);
-            EfLookupTable.Add<Color,ColorDTO>(Context,data);
+            this.validation.ValidateAndThrow(data);
+
+            EfLookupTable.Update<Color>(Context, data);
         }
     }
 }

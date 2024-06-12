@@ -41,11 +41,18 @@ namespace Implementation.UseCases.Commands.Users
                     throw new ArgumentException();
                 }
                 var fileName = Guid.NewGuid().ToString() + extension;
-
-                var savePath = Path.Combine("wwwroot", "users", fileName);
-                using var fs = new FileStream(savePath, FileMode.Create);
-                data.Image.CopyTo(fs);
-                profile_path = "/users/" + fileName;
+                if (Path.Exists(fileName))
+                {
+                    return;
+                }
+                else
+                {
+                    var savePath = Path.Combine("wwwroot", "users", fileName);
+                    using var fs = new FileStream(savePath, FileMode.Create);
+                    data.Image.CopyTo(fs);
+                    profile_path = "/users/" + fileName;
+                }
+                
             }
             User user = new User
             {

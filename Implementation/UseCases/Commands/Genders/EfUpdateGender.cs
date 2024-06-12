@@ -4,7 +4,7 @@ using DataAcess;
 using Domain.LookupTables;
 using FluentValidation;
 using Implementation.UseCases.Commands;
-using Implementation.Validations;
+using Implementation.Validations.Gender;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +15,8 @@ namespace Implementation.UseCases.Commands.Genders
 {
     public class EfUpdateGender : EfUseCase, IUpdateGenderCommand
     {
-        private CreateUpdateGenderDTOValidation _validator;
-        public EfUpdateGender(CreateUpdateGenderDTOValidation validatons, ASPContext context) : base(context)
+        private UpdateGenderDTOValidation _validator;
+        public EfUpdateGender(UpdateGenderDTOValidation validatons, ASPContext context) : base(context)
         {
             _validator = validatons;
         }

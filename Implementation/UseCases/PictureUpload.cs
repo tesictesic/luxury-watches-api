@@ -25,11 +25,14 @@ namespace Implementation.UseCases
             }
 
             var fileName = Guid.NewGuid().ToString() + extension;
-            var savePath = Path.Combine("wwwroot", folderPath, fileName);
-            using var fs = new FileStream(savePath, FileMode.Create);
-            image.CopyTo(fs);
+            
+                var savePath = Path.Combine("wwwroot", folderPath, fileName);
+                using var fs = new FileStream(savePath, FileMode.Create);
+                image.CopyTo(fs);
 
-            return $"/{folderPath}/{fileName}";
+                return $"/{folderPath}/{fileName}";
+            
+            
         }
     }
 }

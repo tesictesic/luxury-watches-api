@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Implementation.Validations
+namespace Implementation.Validations.Color
 {
-    public class CreateUpdateColorDTOValidation:AbstractValidator<ColorDTO>
+    public class UpdateColorDTOValidation:AbstractValidator<ColorDTO>
     {
         private readonly ASPContext _context;
-        public CreateUpdateColorDTOValidation(ASPContext context)
+        public UpdateColorDTOValidation(ASPContext context)
         {
             _context = context;
             CascadeMode = CascadeMode.StopOnFirstFailure;
@@ -20,7 +20,7 @@ namespace Implementation.Validations
                               .WithMessage("Color name is required")
                               .MinimumLength(3)
                               .WithMessage("Min number of characters is 3")
-                              .Must(name => !_context.Colors.Any(g => g.Name == name))
+                              .Must((dto,name) => !_context.Colors.Any(g => g.Name == name && g.Id!=dto.Id))
                               .WithMessage("Color name is in use");
         }
     }

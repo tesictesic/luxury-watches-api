@@ -1,5 +1,5 @@
-﻿using Application.DTO.Lookup;
-using Application.UseCases.Commands.ColorCommands;
+﻿using Application.DTO;
+using Application.UseCases.Commands.UseUserCaseCommands;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,59 +9,50 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ColorController : ControllerBase
+    public class UserUseCaseController : ControllerBase
     {
         private readonly UseCaseHandler _useCaseHandler;
-        public ColorController(UseCaseHandler handler)
+        public UserUseCaseController(UseCaseHandler handler)
         {
             this._useCaseHandler = handler;
         }
-        // GET: api/<ColorController>
+        // GET: api/<UserUseCaseController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<ColorController>/5
+        // GET api/<UserUseCaseController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<ColorController>
+        // POST api/<UserUseCaseController>
         [HttpPost]
-        public IActionResult Post([FromBody] ColorDTO dTO, [FromServices] ICreateColorCommand command)
-        {
-            try
-            {
-                _useCaseHandler.HandleCommand(command, dTO);
-                return StatusCode(201);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        // PUT api/<ColorController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put([FromBody] ColorDTO dto, [FromServices] IUpdateColorCommand command)
+        public IActionResult Post([FromBody] UserUseCaseDTO dto, ICreateUserUseCaseCommand command)
         {
             try
             {
                 _useCaseHandler.HandleCommand(command, dto);
-                return StatusCode(203);
+                return StatusCode(201);
             }
-            
             catch(Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return BadRequest(ex.Message);
-    }
-}
+            }
+        }
 
-        // DELETE api/<ColorController>/5
+        // PUT api/<UserUseCaseController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/<UserUseCaseController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

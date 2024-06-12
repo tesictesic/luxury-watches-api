@@ -2,6 +2,7 @@
 using Domain.Join_Tables;
 using Domain.LookupTables;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,31 @@ namespace DataAcess
         {
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
             base.OnModelCreating(modelBuilder);
+        }
+        public override int SaveChanges()
+        {
+            IEnumerable<EntityEntry> entries = this.ChangeTracker.Entries();
+
+            foreach (EntityEntry entry in entries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    if (entry.Entity is Entity e)
+                    {
+                        e.CreatedAt = DateTime.UtcNow;
+                    }
+                }
+
+                if (entry.State == EntityState.Modified)
+                {
+                    if (entry.Entity is Entity e)
+                    {
+                        e.UpdatedAt = DateTime.UtcNow;
+                    }
+                }
+            }
+
+            return base.SaveChanges();
         }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Brand> Brands { get; set; }

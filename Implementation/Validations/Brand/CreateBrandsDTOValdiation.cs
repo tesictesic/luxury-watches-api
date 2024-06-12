@@ -9,15 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Implementation.Validations
+namespace Implementation.Validations.Brand
 {
-    public class CreateUpdateBrandsDTOValdiation : AbstractValidator<BrandDTO>
+    public class CreateBrandsDTOValdiation : AbstractValidator<BrandDTO>
     {
         private readonly ASPContext _context;
-        public CreateUpdateBrandsDTOValdiation(ASPContext context)
+        public CreateBrandsDTOValdiation(ASPContext context)
         {
 
-            this._context = context;
+            _context = context;
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
             RuleFor(x => x.Name).NotNull()
@@ -27,7 +27,7 @@ namespace Implementation.Validations
                                .Must(name => !_context.Brands.Any(g => g.Name == name))
                                .WithMessage("Category name is in use");
 
-            RuleFor(x=>x.Description).NotNull()
+            RuleFor(x => x.Description).NotNull()
                                .WithMessage("Description is required")
                                .MinimumLength(20)
                                .WithMessage("Min number of characters is 20")

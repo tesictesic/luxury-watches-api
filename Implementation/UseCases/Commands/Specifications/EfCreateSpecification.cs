@@ -3,7 +3,7 @@ using Application.UseCases.Commands.SpecificationCommands;
 using DataAcess;
 using Domain.LookupTables;
 using FluentValidation;
-using Implementation.Validations;
+using Implementation.Validations.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace Implementation.UseCases.Commands.Specifications
 {
-    public class EfCreateSpecification : EfUseCase,ICreateSpecification
+    public class EfCreateSpecification : EfUseCase,ICreateSpecificationCommand
     {
-        private readonly CreateUpdateSpecificationDTOValidation validations;
-        public EfCreateSpecification(CreateUpdateSpecificationDTOValidation validations,ASPContext context):base(context) 
+        private readonly CreateSpecificationDTOValidation validations;
+        public EfCreateSpecification(CreateSpecificationDTOValidation validations,ASPContext context):base(context) 
         {
             this.validations = validations;
         }

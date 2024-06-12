@@ -43,9 +43,18 @@ namespace API.Controllers
         }
 
         // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put([FromForm] RegisterDTO dto, [FromServices] IUserUpdateCommand command)
         {
+            try
+            {
+                this._useCaseHandler.HandleCommand(command, dto);
+                return StatusCode(204);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest();
+            }
         }
 
         // DELETE api/<UserController>/5

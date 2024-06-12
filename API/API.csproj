@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\products\" />
     <Folder Include="wwwroot\users\" />
-    <Folder Include="wwwroot\temp\" />
   </ItemGroup>
 
 </Project>

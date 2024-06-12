@@ -17,6 +17,7 @@ namespace API.Controllers
         {
             this._useCaseHandler = handler;
         }
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] CartDTO dTO,ICreateCartCommand command)
         {

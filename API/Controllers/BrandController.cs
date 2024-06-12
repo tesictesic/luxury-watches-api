@@ -40,9 +40,19 @@ namespace API.Controllers
         }
 
         // PUT api/<BrandController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromBody] BrandDTO dto, [FromServices] IUpdateBrandCommand command)
         {
+            try
+            {
+                _handler.HandleCommand(command, dto);
+                return StatusCode(203);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE api/<BrandController>/5

@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Commands.SpecificationCommands
 {
-    public interface ICreateSpecification:ICommand<SpecificationDTO>
+    public interface IUpdateSpecificationCommand:ICommand<SpecificationDTO>
     {
-
     }
 }

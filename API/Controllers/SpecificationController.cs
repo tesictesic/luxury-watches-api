@@ -32,7 +32,7 @@ namespace API.Controllers
 
         // POST api/<SpecificationController>
         [HttpPost]
-        public IActionResult Post([FromBody] SpecificationDTO specificationDTO, [FromServices] ICreateSpecification command)
+        public IActionResult Post([FromBody] SpecificationDTO specificationDTO, [FromServices] ICreateSpecificationCommand command)
         {
             try
             {
@@ -47,9 +47,19 @@ namespace API.Controllers
 
         // PUT api/<SpecificationController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put([FromBody] SpecificationDTO dto, [FromServices] IUpdateSpecificationCommand command)
         {
-        }
+            try
+            {
+                useCaseHandler.HandleCommand(command, dto);
+                return StatusCode(203);
+            }
+           
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+    }
+}
 
         // DELETE api/<SpecificationController>/5
         [HttpDelete("{id}")]

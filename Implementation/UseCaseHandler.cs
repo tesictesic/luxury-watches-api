@@ -37,11 +37,11 @@ namespace Implementation
                 stopwatch.Start();
                 command.Execute(data);
                 stopwatch.Stop();
-                if (actor.GetActor().Id != 0)
+
+                if (actor.GetActor().Id > 0)
                 {
                     LoggingUseCase(command, data);
                 }
-               
                 Console.WriteLine(command.Name+ "Duration:"+ stopwatch.ElapsedMilliseconds+" ms.");
                 Console.WriteLine("Actor:"+actor.GetActor().FirstName+" "+actor.GetActor().LastName+" "+actor.GetActor().Email);
             }

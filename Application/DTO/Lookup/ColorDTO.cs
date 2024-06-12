@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTO
+namespace Application.DTO.Lookup
 {
-    public class GenderDTO:LookupDTO
+    public class ColorDTO : LookupDTO
     {
+
     }
 }

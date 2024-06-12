@@ -3,6 +3,7 @@ using Application;
 using Application.Email;
 using Application.Logging;
 using Application.UseCases.Commands.BrandsCommands;
+using Application.UseCases.Commands.CartCommands;
 using Application.UseCases.Commands.ColorCommands;
 using Application.UseCases.Commands.GenderCommands;
 using Application.UseCases.Commands.ProductCommands;
@@ -14,6 +15,7 @@ using Implementation;
 using Implementation.Email;
 using Implementation.Logging;
 using Implementation.UseCases.Commands.Brands;
+using Implementation.UseCases.Commands.Cart;
 using Implementation.UseCases.Commands.Colors;
 using Implementation.UseCases.Commands.Genders;
 using Implementation.UseCases.Commands.Products;
@@ -70,6 +72,8 @@ builder.Services.AddTransient<CreateUpdateColorDTOValidation>();
 builder.Services.AddTransient<CreateUpdateSpecificationDTOValidation>();
 builder.Services.AddTransient<ICreateProductCommand, EfCreateProduct>();
 builder.Services.AddTransient<ProductDTOValidation>();
+builder.Services.AddTransient<ICreateCartCommand, EfCartCommand>();
+builder.Services.AddTransient<CartDTOValidation>();
 builder.Services.AddTransient<JWTManager>();
 
 builder.Services.AddAuthentication(options =>

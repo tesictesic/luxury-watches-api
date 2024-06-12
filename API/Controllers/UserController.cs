@@ -1,4 +1,4 @@
-﻿using Application.DTO;
+﻿using Application.DTO.User;
 using Application.UseCases.Commands.UserCommands;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;

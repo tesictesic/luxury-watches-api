@@ -1,4 +1,4 @@
-﻿using Application.DTO;
+﻿using Application.DTO.Lookup;
 using Application.UseCases.Commands.GenderCommands;
 using DataAcess;
 using Domain.LookupTables;

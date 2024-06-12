@@ -1,4 +1,4 @@
-﻿using Application.DTO;
+﻿using Application.DTO.Lookup;
 using Application.DTO.Searches;
 using Application.UseCases.Queries;
 using DataAcess;

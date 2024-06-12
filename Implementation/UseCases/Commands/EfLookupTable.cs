@@ -1,4 +1,4 @@
-﻿using Application.DTO;
+﻿using Application.DTO.Lookup;
 using DataAcess;
 using Domain;
 using Domain.LookupTables;

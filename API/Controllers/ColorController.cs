@@ -1,4 +1,4 @@
-﻿using Application.DTO;
+﻿using Application.DTO.Lookup;
 using Application.UseCases.Commands.ColorCommands;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;

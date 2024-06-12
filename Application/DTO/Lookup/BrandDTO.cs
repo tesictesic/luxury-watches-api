@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTO
+namespace Application.DTO.Lookup
 {
-    public class LookupDTO:BaseDTO
+    public class BrandDTO : LookupDTO
     {
-        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Application.DTO;
+﻿using Application.DTO.User;
 using DataAcess;
 using FluentValidation;
 using System;

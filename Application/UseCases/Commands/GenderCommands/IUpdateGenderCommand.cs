@@ -1,4 +1,4 @@
-﻿using Application.DTO;
+﻿using Application.DTO.Lookup;
 using System;
 using System.Collections.Generic;
 using System.Linq;

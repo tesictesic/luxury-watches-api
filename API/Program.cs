@@ -61,13 +61,15 @@ builder.Services.AddTransient<IApplicationActorProvider>(x =>
 });
 builder.Services.AddTransient<IGetGenderQuery,EfGetGender>(); // kada neko zatrazi IGetGender (aplikaciju) mi mu vratimo EfGetGende (implementaciju) klasu.
 builder.Services.AddTransient<ICreateGenderCommand, EfCreateGender>();
+builder.Services.AddTransient<IUpdateGenderCommand, EfUpdateGender>();
+builder.Services.AddTransient<IDeleteGenderCommand, EfDeleteGender>();
 builder.Services.AddTransient<CreateGenderDTOValidation>();
 builder.Services.AddTransient<UpdateGenderDTOValidation>();
 builder.Services.AddTransient<CreateBrandsDTOValdiation>();
 builder.Services.AddTransient<UpdateBrandsDTOValidation>();
-builder.Services.AddTransient<IUpdateGenderCommand,EfUpdateGender>();
 builder.Services.AddTransient<ICreateBrandCommand, EfCreateBrand>();
 builder.Services.AddTransient<IUpdateBrandCommand, EfUpdateBrand>();
+builder.Services.AddTransient<IDeleteBrandCommand, EfDeleteBrand>();
 builder.Services.AddTransient<IGetAuditLogQuery,EfGetAuditLog>();
 builder.Services.AddTransient<UserRegisterDTOValidation>();
 builder.Services.AddTransient<IUserRegisterCommand, EfUserRegister>();
@@ -78,9 +80,11 @@ builder.Services.AddTransient<IExceptionLogger, ExceptionLogger>();
 builder.Services.AddTransient<IUseCaseLogger, UseCaseLogger>();
 builder.Services.AddTransient<ICreateSpecificationCommand, EfCreateSpecification>();
 builder.Services.AddTransient<IUpdateSpecificationCommand, EfUpdateSpecification>();
+builder.Services.AddTransient<IDeleteSpecificationCommand, EfDeleteSpecification>();
 builder.Services.AddTransient<UpdateSpecificationDTOValidation>();
 builder.Services.AddTransient<ICreateColorCommand, EfCreateColor>();
 builder.Services.AddTransient<IUpdateColorCommand, EfUpdateColor>();
+builder.Services.AddTransient<IDeleteColorCommand, EfDeleteColor>();
 builder.Services.AddTransient<CreateColorDTOValidation>();
 builder.Services.AddTransient<UpdateColorDTOValidation>();
 builder.Services.AddTransient<CreateSpecificationDTOValidation>();

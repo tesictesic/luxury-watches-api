@@ -1,4 +1,5 @@
-﻿using Application.DTO.Lookup;
+﻿using Application.DTO;
+using Application.DTO.Lookup;
 using Application.UseCases.Commands.BrandsCommands;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;
@@ -57,8 +58,22 @@ namespace API.Controllers
 
         // DELETE api/<BrandController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id, IDeleteBrandCommand command)
         {
+            DeleteDTO dto = new DeleteDTO
+            {
+                Id = id
+            };
+            try
+            {
+                _handler.HandleCommand(command, dto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

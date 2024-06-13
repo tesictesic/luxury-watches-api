@@ -1,4 +1,5 @@
-﻿using Application.DTO.Lookup;
+﻿using Application.DTO;
+using Application.DTO.Lookup;
 using Application.UseCases.Commands.SpecificationCommands;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;
@@ -63,8 +64,22 @@ namespace API.Controllers
 
         // DELETE api/<SpecificationController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id, IDeleteSpecificationCommand command)
         {
+            DeleteDTO dto = new DeleteDTO
+            {
+                Id = id
+            };
+            try
+            {
+                useCaseHandler.HandleCommand(command, dto);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }

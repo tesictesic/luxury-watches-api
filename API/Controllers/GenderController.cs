@@ -1,4 +1,5 @@
-﻿using Application.DTO.Lookup;
+﻿using Application.DTO;
+using Application.DTO.Lookup;
 using Application.DTO.Searches;
 using Application.UseCases.Commands.GenderCommands;
 using Application.UseCases.Queries;
@@ -72,8 +73,22 @@ namespace API.Controllers
 
         // DELETE api/<GenderController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id,IDeleteGenderCommand command)
         {
+            DeleteDTO dto = new DeleteDTO
+            {
+                Id = id
+            };
+            try
+            {
+                _handler.HandleCommand(command, dto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

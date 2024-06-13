@@ -1,4 +1,5 @@
-﻿using Application.DTO.Lookup;
+﻿using Application.DTO;
+using Application.DTO.Lookup;
 using Application.UseCases.Commands.ColorCommands;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;
@@ -63,8 +64,21 @@ namespace API.Controllers
 
         // DELETE api/<ColorController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id,IDeleteColorCommand command)
         {
+            DeleteDTO dto = new DeleteDTO
+            {
+                Id = id
+            };
+            try
+            {
+                _useCaseHandler.HandleCommand(command, dto);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

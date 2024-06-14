@@ -1,5 +1,8 @@
-﻿using Application.DTO.User;
+﻿using Application.DTO;
+using Application.DTO.Searches;
+using Application.DTO.User;
 using Application.UseCases.Commands.UserCommands;
+using Application.UseCases.Queries;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +21,16 @@ namespace API.Controllers
         }
         // GET: api/<UserController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromBody] UserSerachDTO dto, [FromServices] IGetUserQuery query)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(_useCaseHandler.HandleQuery(query, dto));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         
@@ -59,8 +69,21 @@ namespace API.Controllers
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id,[FromServices]IUserDeleteCommand command)
         {
+            try
+            {
+                DeleteDTO dto = new DeleteDTO
+                {
+                    Id = id
+                };
+                _useCaseHandler.HandleCommand(command, dto);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

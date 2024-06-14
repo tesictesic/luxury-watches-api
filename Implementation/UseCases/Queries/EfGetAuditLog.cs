@@ -32,11 +32,11 @@ namespace Implementation.UseCases.Queries
             {
                 query=query.Where(x=>x.UseCaseName.ToLower().Contains(search.UseCaseName.ToLower()));
             }
-            if (search.DateFrom != null)
+            if (search.DateFrom.HasValue)
             {
                 query = query.Where(x =>x.ExecutedAt>=search.DateFrom);
             }
-            if (search.DateTo != null)
+            if (search.DateTo.HasValue)
             {
                 query = query.Where(x => x.ExecutedAt <= search.DateTo);
             }

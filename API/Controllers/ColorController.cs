@@ -1,6 +1,8 @@
 ﻿using Application.DTO;
 using Application.DTO.Lookup;
+using Application.DTO.Searches;
 using Application.UseCases.Commands.ColorCommands;
+using Application.UseCases.Queries;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,18 +21,17 @@ namespace API.Controllers
         }
         // GET: api/<ColorController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromBody] LookupSearch search, [FromServices] IGetColorQuery query)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(_useCaseHandler.HandleQuery(query, search));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-
-        // GET api/<ColorController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<ColorController>
         [HttpPost]
         public IActionResult Post([FromBody] ColorDTO dTO, [FromServices] ICreateColorCommand command)
@@ -64,7 +65,7 @@ namespace API.Controllers
 
         // DELETE api/<ColorController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id,IDeleteColorCommand command)
+        public IActionResult Delete(int id,[FromServices] IDeleteColorCommand command)
         {
             DeleteDTO dto = new DeleteDTO
             {

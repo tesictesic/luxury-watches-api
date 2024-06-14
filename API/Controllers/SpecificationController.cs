@@ -1,6 +1,8 @@
 ﻿using Application.DTO;
 using Application.DTO.Lookup;
+using Application.DTO.Searches;
 using Application.UseCases.Commands.SpecificationCommands;
+using Application.UseCases.Queries;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,17 +21,20 @@ namespace API.Controllers
         }
         // GET: api/<SpecificationController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromBody] LookupSearch search, [FromServices] IGetSpecificationQuery query)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(this.useCaseHandler.HandleQuery(query, search));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET api/<SpecificationController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        
 
         // POST api/<SpecificationController>
         [HttpPost]
@@ -64,7 +69,7 @@ namespace API.Controllers
 
         // DELETE api/<SpecificationController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id, IDeleteSpecificationCommand command)
+        public IActionResult Delete(int id, [FromServices]IDeleteSpecificationCommand command)
         {
             DeleteDTO dto = new DeleteDTO
             {

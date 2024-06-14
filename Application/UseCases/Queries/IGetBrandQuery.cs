@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Queries
 {
-    public interface IGetGenderQuery:IQuery<LookupSearch, PagedResult<LookupDTO>>
+    public interface IGetBrandQuery:IQuery<LookupSearch,PagedResult<BrandDTO>>
     {
-        // propisujemo IEnumerable<GenderDTO>> iz razloga zato sto moze da bude niz vise DTO-a (JSON-a)
     }
 }

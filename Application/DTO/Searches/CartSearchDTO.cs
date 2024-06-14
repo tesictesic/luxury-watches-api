@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.DTO.Searches
 {
-    public class GenderSearch:BaseSearchDTO
+    public class CartSearchDTO:LookupSearch
     {
-        public string? Keyword { get; set; }
+        public DateTime? DateFrom { get; set; }
+        public DateTime? DateTo { get; set; }
     }
 }

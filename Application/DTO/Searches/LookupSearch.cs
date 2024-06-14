@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTO.Lookup
+namespace Application.DTO.Searches
 {
-    public class ColorDTO:LookupDTO
+    public class LookupSearch:BaseSearchDTO
     {
+        public string? Keyword { get; set; }
     }
 }

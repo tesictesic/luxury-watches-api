@@ -1,6 +1,8 @@
 ﻿using Application.DTO;
 using Application.DTO.Lookup;
+using Application.DTO.Searches;
 using Application.UseCases.Commands.BrandsCommands;
+using Application.UseCases.Queries;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +22,18 @@ namespace API.Controllers
 
         // GET: api/<BrandController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromBody] LookupSearch search, [FromServices] IGetBrandQuery query)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                _handler.HandleQuery(query,search);
+                return Ok(_handler.HandleQuery(query, search));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
         // POST api/<BrandController>
         [HttpPost]
@@ -58,7 +69,7 @@ namespace API.Controllers
 
         // DELETE api/<BrandController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id, IDeleteBrandCommand command)
+        public IActionResult Delete(int id, [FromServices] IDeleteBrandCommand command)
         {
             DeleteDTO dto = new DeleteDTO
             {

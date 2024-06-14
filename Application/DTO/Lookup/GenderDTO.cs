@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTO.Lookup
 {
-    public class GenderDTO : LookupDTO
+    public class GenderDTO:LookupDTO
     {
     }
 }

@@ -25,7 +25,7 @@ namespace API.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Get([FromQuery] GenderSearch searchDTO, [FromServices] IGetGenderQuery query)
+        public IActionResult Get([FromQuery] LookupSearch searchDTO, [FromServices] IGetGenderQuery query)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace API.Controllers
 
         // DELETE api/<GenderController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id,IDeleteGenderCommand command)
+        public IActionResult Delete(int id,[FromServices] IDeleteGenderCommand command)
         {
             DeleteDTO dto = new DeleteDTO
             {

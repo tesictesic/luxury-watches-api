@@ -1,5 +1,7 @@
 ﻿using Application.DTO.Cart;
+using Application.DTO.Searches;
 using Application.UseCases.Commands.CartCommands;
+using Application.UseCases.Queries;
 using Implementation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +18,18 @@ namespace API.Controllers
         public CartController(UseCaseHandler handler)
         {
             this._useCaseHandler = handler;
+        }
+        [HttpGet]
+        public IActionResult Get([FromBody]CartSearchDTO dto, [FromServices] IGetCartQuery query)
+        {
+            try
+            {
+                return Ok(_useCaseHandler.HandleQuery(query, dto));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [Authorize]
         [HttpPost]

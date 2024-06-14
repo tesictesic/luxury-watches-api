@@ -4,6 +4,7 @@ using Implementation;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Concurrent;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,6 +14,8 @@ namespace API.Core
     public class JWTManager
     {
         private ASPContext context;
+        private static readonly ConcurrentDictionary<Guid, SecurityToken> ActiveTokens = new ConcurrentDictionary<Guid, SecurityToken>();
+        private static readonly ConcurrentBag<Guid> RevokedTokens = new ConcurrentBag<Guid>();
         public JWTManager(ASPContext context)
         {
                 this.context = context;
@@ -51,7 +54,8 @@ namespace API.Core
                         expires: now.AddSeconds(600),
                         signingCredentials: credentials
                         );
-                   
+                    var tokenId = new Guid(claims.First(x => x.Type == JwtRegisteredClaimNames.Jti).Value);
+                    ActiveTokens[tokenId] = token;
                 }
                 else
                 {
@@ -60,13 +64,39 @@ namespace API.Core
             }
             else
             {
-                 new UnathorizedActor();
+                throw new UnauthorizedAccessException();
             }
             return new JwtSecurityTokenHandler().WriteToken(token);
 
 
 
         }
-        
+
+        public void RemoveToken(Guid tokenId)
+        {
+            if (ActiveTokens.TryRemove(tokenId, out _))
+            {
+                RevokedTokens.Add(tokenId);
+                Console.WriteLine("Token removed successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Token not found.");
+            }
+        }
+        public Guid GetTokenIdFromJwt(string jwtToken)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(jwtToken) as JwtSecurityToken;
+            var tokenIdClaim = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Jti);
+            return tokenIdClaim != null ? new Guid(tokenIdClaim.Value) : Guid.Empty;
+        }
+        public bool IsTokenRevoked(string jwtToken)
+        {
+            var tokenId = GetTokenIdFromJwt(jwtToken);
+            return RevokedTokens.Contains(tokenId);
+        }
+
+
     }
 }

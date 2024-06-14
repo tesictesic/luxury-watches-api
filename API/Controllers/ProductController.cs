@@ -1,7 +1,11 @@
-﻿using Application.DTO.Product;
+﻿using Application.DTO;
+using Application.DTO.Product;
+using Application.DTO.Searches;
 using Application.UseCases.Commands.ProductCommands;
+using Application.UseCases.Queries;
 using Implementation;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,16 +22,34 @@ namespace API.Controllers
         }
         // GET: api/<ProductController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromBody] ProductSearchDTO dto, [FromServices] IGetProductQuery query)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                return Ok(this.useCaseHandler.HandleQuery(query, dto));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id, [FromServices] IGetProductSinglePage query)
         {
-            return "value";
+            ProductSinglePageDTO dto = new ProductSinglePageDTO
+            {
+                Id = id
+            };
+            try
+            {
+                return Ok(this.useCaseHandler.HandleQuery(query, dto));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST api/<ProductController>
@@ -54,8 +76,22 @@ namespace API.Controllers
 
         // DELETE api/<ProductController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id,[FromServices] IDeleteProductCommand command)
         {
+            DeleteDTO dto = new DeleteDTO
+            {
+                Id = id
+            };
+            try
+            {
+               useCaseHandler.HandleCommand(command,dto);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }

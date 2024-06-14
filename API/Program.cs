@@ -67,31 +67,42 @@ builder.Services.AddTransient<CreateGenderDTOValidation>();
 builder.Services.AddTransient<UpdateGenderDTOValidation>();
 builder.Services.AddTransient<CreateBrandsDTOValdiation>();
 builder.Services.AddTransient<UpdateBrandsDTOValidation>();
+builder.Services.AddTransient<IGetBrandQuery,EfGetBrand>();
 builder.Services.AddTransient<ICreateBrandCommand, EfCreateBrand>();
 builder.Services.AddTransient<IUpdateBrandCommand, EfUpdateBrand>();
 builder.Services.AddTransient<IDeleteBrandCommand, EfDeleteBrand>();
 builder.Services.AddTransient<IGetAuditLogQuery,EfGetAuditLog>();
 builder.Services.AddTransient<UserRegisterDTOValidation>();
+builder.Services.AddTransient<IGetUserQuery, EfGetUser>();
 builder.Services.AddTransient<IUserRegisterCommand, EfUserRegister>();
 builder.Services.AddTransient<IUserUpdateCommand, EfUserUpdate>();
+builder.Services.AddTransient<IUserDeleteCommand, EfUserDelete>();
 builder.Services.AddTransient<UpdateUserDTOValidation>();
 builder.Services.AddTransient<IEmailSender,SMTPEmailSender>();
 builder.Services.AddTransient<IExceptionLogger, ExceptionLogger>();
 builder.Services.AddTransient<IUseCaseLogger, UseCaseLogger>();
+builder.Services.AddTransient<IGetSpecificationQuery, EfGetSpecification>();
 builder.Services.AddTransient<ICreateSpecificationCommand, EfCreateSpecification>();
 builder.Services.AddTransient<IUpdateSpecificationCommand, EfUpdateSpecification>();
 builder.Services.AddTransient<IDeleteSpecificationCommand, EfDeleteSpecification>();
 builder.Services.AddTransient<UpdateSpecificationDTOValidation>();
+builder.Services.AddTransient<IGetColorQuery, EfGetColor>();
 builder.Services.AddTransient<ICreateColorCommand, EfCreateColor>();
 builder.Services.AddTransient<IUpdateColorCommand, EfUpdateColor>();
 builder.Services.AddTransient<IDeleteColorCommand, EfDeleteColor>();
 builder.Services.AddTransient<CreateColorDTOValidation>();
 builder.Services.AddTransient<UpdateColorDTOValidation>();
 builder.Services.AddTransient<CreateSpecificationDTOValidation>();
+builder.Services.AddTransient<IGetProductQuery,EfGetProduct>();
+builder.Services.AddTransient<IGetProductSinglePage,EfGetProductSinglePage>();
 builder.Services.AddTransient<ICreateProductCommand, EfCreateProduct>();
+
+builder.Services.AddTransient<IDeleteProductCommand, EfDeleteProduct>();
 builder.Services.AddTransient<ProductDTOValidation>();
+builder.Services.AddTransient<IGetCartQuery, EfGetCart>(); 
 builder.Services.AddTransient<ICreateCartCommand, EfCartCommand>();
 builder.Services.AddTransient<ICreateUserUseCaseCommand, EfCreateUseUserCase>();
+builder.Services.AddTransient<IDeleteUserUseCaseCommand, EfDeleteUseUserCase>();
 builder.Services.AddTransient<CreateUserUseCaseDTOValidation>();
 builder.Services.AddTransient<CartDTOValidation>();
 builder.Services.AddTransient<JWTManager>();
@@ -131,6 +142,24 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.Use(async (context, next) =>
+{
+    var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+    var jwtManager = context.RequestServices.GetRequiredService<JWTManager>();
+
+    if (!string.IsNullOrEmpty(token))
+    {
+        var tokenId = jwtManager.GetTokenIdFromJwt(token);
+
+        if (jwtManager.IsTokenRevoked(token))
+        {
+            context.Response.StatusCode = 401; // Unauthorized
+            return;
+        }
+    }
+
+    await next();
+});
 
 app.MapControllers();
 

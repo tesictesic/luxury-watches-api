@@ -53,9 +53,19 @@ namespace API.Controllers
         }
 
         // DELETE api/<UserUseCaseController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete([FromBody] UserUseCaseDTO dto,[FromServices]IDeleteUserUseCaseCommand command)
+
         {
+            try
+            {
+                _useCaseHandler.HandleCommand(command, dto);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

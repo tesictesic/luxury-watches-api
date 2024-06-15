@@ -4,6 +4,7 @@ using Application.DTO.Searches;
 using Application.UseCases.Commands.SpecificationCommands;
 using Application.UseCases.Queries;
 using Implementation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,6 +21,7 @@ namespace API.Controllers
             this.useCaseHandler = useCaseHandler;
         }
         // GET: api/<SpecificationController>
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromBody] LookupSearch search, [FromServices] IGetSpecificationQuery query)
         {
@@ -31,6 +33,7 @@ namespace API.Controllers
 
         // POST api/<SpecificationController>
         [HttpPost]
+        [Authorize]
         public IActionResult Post([FromBody] SpecificationDTO specificationDTO, [FromServices] ICreateSpecificationCommand command)
         {
             this.useCaseHandler.HandleCommand(command, specificationDTO);
@@ -39,6 +42,7 @@ namespace API.Controllers
 
         // PUT api/<SpecificationController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult Put([FromBody] SpecificationDTO dto, [FromServices] IUpdateSpecificationCommand command)
         {
             useCaseHandler.HandleCommand(command, dto);
@@ -46,6 +50,7 @@ namespace API.Controllers
         }
 
         // DELETE api/<SpecificationController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id, [FromServices]IDeleteSpecificationCommand command)
         {

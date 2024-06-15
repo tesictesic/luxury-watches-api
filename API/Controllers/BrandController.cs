@@ -4,6 +4,7 @@ using Application.DTO.Searches;
 using Application.UseCases.Commands.BrandsCommands;
 using Application.UseCases.Queries;
 using Implementation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,6 +22,7 @@ namespace API.Controllers
         }
 
         // GET: api/<BrandController>
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromBody] LookupSearch search, [FromServices] IGetBrandQuery query)
         {
@@ -32,6 +34,7 @@ namespace API.Controllers
            
         }
         // POST api/<BrandController>
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] BrandDTO dto, [FromServices] ICreateBrandCommand command)
         {
@@ -41,6 +44,7 @@ namespace API.Controllers
         }
 
         // PUT api/<BrandController>/5
+        [Authorize]
         [HttpPut]
         public IActionResult Put([FromBody] BrandDTO dto, [FromServices] IUpdateBrandCommand command)
         {
@@ -49,6 +53,7 @@ namespace API.Controllers
         }
 
         // DELETE api/<BrandController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id, [FromServices] IDeleteBrandCommand command)
         {

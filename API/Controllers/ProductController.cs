@@ -4,6 +4,7 @@ using Application.DTO.Searches;
 using Application.UseCases.Commands.ProductCommands;
 using Application.UseCases.Queries;
 using Implementation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -46,6 +47,7 @@ namespace API.Controllers
         }
 
         // POST api/<ProductController>
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromForm] ProductDTO dto,ICreateProductCommand command)
         {
@@ -64,6 +66,7 @@ namespace API.Controllers
         }
 
         // DELETE api/<ProductController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id,[FromServices] IDeleteProductCommand command)
         {

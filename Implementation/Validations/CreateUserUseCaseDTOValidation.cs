@@ -27,7 +27,10 @@ namespace Implementation.Validations
             RuleFor(x => x.UseCaseId).NotEmpty()
                                    .WithMessage("UseCase cannot be empty")
                                    .Must(x => x > 0 && x <= UseCaseInfo.MaxUseCaseId)
-                                   .WithMessage("Invalid usecase id range.");
+                                   .WithMessage("Invalid usecase id range.")
+                                   .Must((dto, usecaseId) => !_context.UserUseCases.Any(y => y.UseCaseId == usecaseId && y.UserId == dto.UserId))
+                                   .WithMessage("That use case has already been set for that user");
+
 
 
         }

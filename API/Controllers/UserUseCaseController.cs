@@ -1,6 +1,7 @@
 ﻿using Application.DTO;
 using Application.UseCases.Commands.UseUserCaseCommands;
 using Implementation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,6 +32,7 @@ namespace API.Controllers
         }
 
         // POST api/<UserUseCaseController>
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] UserUseCaseDTO dto, ICreateUserUseCaseCommand command)
         {
@@ -45,6 +47,7 @@ namespace API.Controllers
         }
 
         // DELETE api/<UserUseCaseController>/5
+        [Authorize]
         [HttpDelete]
         public IActionResult Delete([FromBody] UserUseCaseDTO dto,[FromServices]IDeleteUserUseCaseCommand command)
 

@@ -19,6 +19,7 @@ namespace API.Controllers
         {
             this._useCaseHandler = handler;
         }
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromBody]CartSearchDTO dto, [FromServices] IGetCartQuery query)
         {
@@ -32,9 +33,10 @@ namespace API.Controllers
             return StatusCode(201);
         }
 
-        
+
 
         // DELETE api/<CartController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

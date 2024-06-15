@@ -4,6 +4,7 @@ using Application.DTO.User;
 using Application.UseCases.Commands.UserCommands;
 using Application.UseCases.Queries;
 using Implementation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,15 +21,17 @@ namespace API.Controllers
             this._useCaseHandler = useCaseHandler;
         }
         // GET: api/<UserController>
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromBody] UserSerachDTO dto, [FromServices] IGetUserQuery query)
         {
             return Ok(_useCaseHandler.HandleQuery(query, dto));
         }
 
-        
+
 
         // POST api/<UserController>
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromForm] RegisterDTO registerDTO, [FromServices] IUserRegisterCommand command)
         {
@@ -37,6 +40,8 @@ namespace API.Controllers
         }
 
         // PUT api/<UserController>/5
+        [Authorize]
+        [HttpPut]
         public IActionResult Put([FromForm] RegisterDTO dto, [FromServices] IUserUpdateCommand command)
         {
             this._useCaseHandler.HandleCommand(command, dto);
@@ -44,6 +49,7 @@ namespace API.Controllers
         }
 
         // DELETE api/<UserController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id,[FromServices]IUserDeleteCommand command)
         {

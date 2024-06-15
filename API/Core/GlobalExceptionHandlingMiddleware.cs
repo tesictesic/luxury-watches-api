@@ -26,10 +26,12 @@ namespace API.Core
             }
             catch (Exception exception)
             {
-                if (exception is UnauthorizedAccessException)
+                if (exception is UnauthorizedAccessException ua)
                 {
                     httpContext.Response.StatusCode = 401;
-                   
+                    var body = new { error = ua.Message };
+                    await httpContext.Response.WriteAsJsonAsync(body);
+
                     return;
                 }
 
@@ -42,9 +44,12 @@ namespace API.Core
                     return;
                 }
 
-                if (exception is EntityNotFoundException)
+                if (exception is EntityNotFoundException ek)
                 {
                     httpContext.Response.StatusCode = 404;
+                    var body = new { error = ek.Message };
+
+                    await httpContext.Response.WriteAsJsonAsync(body);
                     return;
                 }
 

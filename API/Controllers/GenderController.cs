@@ -40,6 +40,7 @@ namespace API.Controllers
         }
 
         // PUT api/<GenderController>/5
+        [Authorize]
         [HttpPut]
         public IActionResult Put ([FromBody] GenderDTO dto, [FromServices] IUpdateGenderCommand command)
         {
@@ -48,6 +49,7 @@ namespace API.Controllers
         }
 
         // DELETE api/<GenderController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id,[FromServices] IDeleteGenderCommand command)
         {

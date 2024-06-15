@@ -23,9 +23,13 @@ namespace Implementation.Validations
                                .Must(id => _context.Users.Any(x => x.Id == id))
                                .WithMessage("User must be from table");
 
+
             RuleFor(x => x.UseCaseId).NotEmpty()
-                                   .WithMessage("UseCase cannot be empty");
-                                   
+                                   .WithMessage("UseCase cannot be empty")
+                                   .Must(x => x > 0 && x <= UseCaseInfo.MaxUseCaseId)
+                                   .WithMessage("Invalid usecase id range.");
+
+
         }
        
     }

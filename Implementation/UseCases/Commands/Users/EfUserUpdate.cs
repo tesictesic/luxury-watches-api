@@ -1,4 +1,5 @@
 ﻿using Application.DTO.User;
+using Application.Exceptions;
 using Application.UseCases.Commands.UserCommands;
 using DataAcess;
 using Domain;
@@ -30,7 +31,7 @@ namespace Implementation.UseCases.Commands.Users
             User user_obj=Context.Users.Find(data.Id);
             if (user_obj == null)
             {
-                throw new InvalidOperationException("User is not found");
+                 throw new EntityNotFoundException(nameof(User), data.Id); ;
             }
             _validation.ValidateAndThrow(data);
             

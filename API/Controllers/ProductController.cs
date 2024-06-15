@@ -42,30 +42,19 @@ namespace API.Controllers
             {
                 Id = id
             };
-            try
-            {
-                return Ok(this.useCaseHandler.HandleQuery(query, dto));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(this.useCaseHandler.HandleQuery(query, dto));
         }
 
         // POST api/<ProductController>
         [HttpPost]
         public IActionResult Post([FromForm] ProductDTO dto,ICreateProductCommand command)
         {
-            try
-            {
+            
+            
                 useCaseHandler.HandleCommand(command, dto);
                 return StatusCode(201);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            
+           
         }
 
         // PUT api/<ProductController>/5
@@ -82,15 +71,8 @@ namespace API.Controllers
             {
                 Id = id
             };
-            try
-            {
-               useCaseHandler.HandleCommand(command,dto);
-                return NoContent();
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            useCaseHandler.HandleCommand(command, dto);
+            return NoContent();
 
         }
     }

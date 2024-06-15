@@ -1,4 +1,5 @@
-﻿using Application.DTO.Cart;
+﻿using Application;
+using Application.DTO.Cart;
 using Application.UseCases.Commands.CartCommands;
 using DataAcess;
 using Domain;
@@ -16,10 +17,12 @@ namespace Implementation.UseCases.Commands.Cart
     public class EfCartCommand : EfUseCase,ICreateCartCommand
     {
         private readonly CartDTOValidation validations;
+        private readonly IApplicationActorProvider actor;
 
-        public EfCartCommand(CartDTOValidation validations,ASPContext context) : base(context)
+        public EfCartCommand(CartDTOValidation validations,IApplicationActorProvider actorr,ASPContext context) : base(context)
         {
             this.validations= validations;
+            this.actor = actorr;
         }
 
         public int Id => 11;
@@ -31,7 +34,7 @@ namespace Implementation.UseCases.Commands.Cart
             this.validations.ValidateAndThrow(data);
             Domain.Cart cart = new Domain.Cart
             {
-                User_id = data.UserId,
+                User_id = actor.GetActor().Id
 
             };
             Context.Carts.Add(cart);

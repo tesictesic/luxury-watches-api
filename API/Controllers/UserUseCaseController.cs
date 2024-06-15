@@ -34,16 +34,8 @@ namespace API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] UserUseCaseDTO dto, ICreateUserUseCaseCommand command)
         {
-            try
-            {
-                _useCaseHandler.HandleCommand(command, dto);
-                return StatusCode(201);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            _useCaseHandler.HandleCommand(command, dto);
+            return StatusCode(201);
         }
 
         // PUT api/<UserUseCaseController>/5
@@ -57,15 +49,8 @@ namespace API.Controllers
         public IActionResult Delete([FromBody] UserUseCaseDTO dto,[FromServices]IDeleteUserUseCaseCommand command)
 
         {
-            try
-            {
-                _useCaseHandler.HandleCommand(command, dto);
-                return NoContent();
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _useCaseHandler.HandleCommand(command, dto);
+            return NoContent();
         }
     }
 }

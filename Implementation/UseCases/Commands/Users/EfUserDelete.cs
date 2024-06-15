@@ -1,7 +1,9 @@
 ﻿using Application.DTO;
+using Application.Exceptions;
 using Application.UseCases.Commands.UserCommands;
 using DataAcess;
 using Domain;
+using Domain.LookupTables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +25,8 @@ namespace Implementation.UseCases.Commands.Users
         public void Execute(DeleteDTO data)
         {
             User user_obj = Context.Users.Find(data.Id);
-            if(user_obj==null) { throw new FileNotFoundException(); }
-            if (user_obj.UserUseCases.Count > 0) { throw new ArgumentException("You cannot delete this specification"); }
+            if(user_obj==null) { throw new EntityNotFoundException(nameof(Brand), data.Id); }
+            if (user_obj.UserUseCases.Count > 0) { throw new ConflictException("You cannot delete this specification"); }
             Context.Users.Remove(user_obj);
             Context.SaveChanges();
         }

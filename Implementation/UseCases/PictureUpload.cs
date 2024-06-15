@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.Exceptions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,13 @@ namespace Implementation.UseCases
             List<string> allowedExtensions = new List<string> { ".png", ".jpg", ".jpeg" };
             if (image == null)
             {
-                throw new ArgumentException("You have to upload picture for product");
+                throw new ConflictException("You have to upload picture for product");
             }
 
             var extension = Path.GetExtension(image.FileName);
             if (!allowedExtensions.Contains(extension.ToLower()))
             {
-                throw new ArgumentException("Invalid file extension.");
+                throw new ConflictException("Invalid file extension.");
             }
 
             var fileName = Guid.NewGuid().ToString() + extension;

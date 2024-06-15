@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.Exceptions;
 using Application.UseCases.Commands.SpecificationCommands;
 using DataAcess;
 using Domain.LookupTables;
@@ -23,8 +24,8 @@ namespace Implementation.UseCases.Commands.Specifications
         public void Execute(DeleteDTO data)
         {
             Specification specification_obj = Context.Specifications.Find(data.Id);
-            if (specification_obj == null) { throw new FileNotFoundException(); }
-            if (specification_obj.Product_Specifications.Count > 0) { throw new ArgumentException("You cannot delete this specification"); }
+            if (specification_obj == null) { throw new EntityNotFoundException(nameof(Brand), data.Id); }
+            if (specification_obj.Product_Specifications.Count > 0) { throw new ConflictException("You cannot delete this specification"); }
             Context.Specifications.Remove(specification_obj);
             Context.SaveChanges();
         }

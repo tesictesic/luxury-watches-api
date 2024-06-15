@@ -24,47 +24,28 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult Get([FromBody] LookupSearch search, [FromServices] IGetBrandQuery query)
         {
-            try
-            {
+           
+            
                 _handler.HandleQuery(query,search);
                 return Ok(_handler.HandleQuery(query, search));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            
+           
         }
         // POST api/<BrandController>
         [HttpPost]
         public IActionResult Post([FromBody] BrandDTO dto, [FromServices] ICreateBrandCommand command)
         {
-            try
-            {
-                _handler.HandleCommand(command,dto);
-                return Created();
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+
+            _handler.HandleCommand(command, dto);
+            return Created();
         }
 
         // PUT api/<BrandController>/5
         [HttpPut]
         public IActionResult Put([FromBody] BrandDTO dto, [FromServices] IUpdateBrandCommand command)
         {
-            try
-            {
-                _handler.HandleCommand(command, dto);
-                return StatusCode(203);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            _handler.HandleCommand(command, dto);
+            return StatusCode(203);
         }
 
         // DELETE api/<BrandController>/5
@@ -75,16 +56,8 @@ namespace API.Controllers
             {
                 Id = id
             };
-            try
-            {
-                _handler.HandleCommand(command, dto);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            _handler.HandleCommand(command, dto);
+            return NoContent();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.Exceptions;
 using Application.UseCases.Commands.ColorCommands;
 using DataAcess;
 using Domain.LookupTables;
@@ -23,8 +24,8 @@ namespace Implementation.UseCases.Commands.Colors
         public void Execute(DeleteDTO data)
         {
             Color color_obj = Context.Colors.Find(data.Id);
-            if (color_obj == null) { throw new FileNotFoundException(); }
-            if (color_obj.ProductColors.Count > 0) { throw new ArgumentException("You cannot delete this color"); }
+            if (color_obj == null) { throw new EntityNotFoundException(nameof(Color), data.Id); }
+            if (color_obj.ProductColors.Count > 0) { throw new ConflictException("You cannot delete this color"); }
             Context.Colors.Remove(color_obj);
             Context.SaveChanges();
         }

@@ -16,13 +16,6 @@ namespace Implementation.Validations
         {
             this._context = context;
             CascadeMode = CascadeMode.StopOnFirstFailure;
-            RuleFor(x => x.UserId).NotEmpty()
-                                .WithMessage("User cannot be empty")
-                                .NotNull()
-                                .WithMessage("User cannot be null")
-                                .Must(user => context.Users.Any(y => y.Id == user))
-                                .WithMessage("User must be from application");
-
             RuleFor(x => x.ProductCarts)
             .NotEmpty()
             .WithMessage("You cannot buy with an empty cart")

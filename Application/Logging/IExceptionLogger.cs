@@ -8,6 +8,6 @@ namespace Application.Logging
 {
     public interface IExceptionLogger
     {
-        void Log(Exception ex);
+        Guid Log(Exception ex);
     }
 }

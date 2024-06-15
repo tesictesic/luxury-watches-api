@@ -23,14 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult Get([FromBody] UserSerachDTO dto, [FromServices] IGetUserQuery query)
         {
-            try
-            {
-                return Ok(_useCaseHandler.HandleQuery(query, dto));
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(_useCaseHandler.HandleQuery(query, dto));
         }
 
         
@@ -39,51 +32,27 @@ namespace API.Controllers
         [HttpPost]
         public IActionResult Post([FromForm] RegisterDTO registerDTO, [FromServices] IUserRegisterCommand command)
         {
-            try
-            
-            {
-                _useCaseHandler.HandleCommand(command, registerDTO);
-                return StatusCode(201);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest();
-            }
+            _useCaseHandler.HandleCommand(command, registerDTO);
+            return StatusCode(201);
         }
 
         // PUT api/<UserController>/5
         public IActionResult Put([FromForm] RegisterDTO dto, [FromServices] IUserUpdateCommand command)
         {
-            try
-            {
-                this._useCaseHandler.HandleCommand(command, dto);
-                return StatusCode(204);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest();
-            }
+            this._useCaseHandler.HandleCommand(command, dto);
+            return StatusCode(204);
         }
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id,[FromServices]IUserDeleteCommand command)
         {
-            try
+            DeleteDTO dto = new DeleteDTO
             {
-                DeleteDTO dto = new DeleteDTO
-                {
-                    Id = id
-                };
-                _useCaseHandler.HandleCommand(command, dto);
-                return NoContent();
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                Id = id
+            };
+            _useCaseHandler.HandleCommand(command, dto);
+            return NoContent();
         }
     }
 }

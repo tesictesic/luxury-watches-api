@@ -27,15 +27,7 @@ namespace API.Controllers
         [Authorize]
         public IActionResult Get([FromQuery] LookupSearch searchDTO, [FromServices] IGetGenderQuery query)
         {
-            try
-            {
-                return Ok(_handler.HandleQuery(query,searchDTO));
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message); 
-            }
+            return Ok(_handler.HandleQuery(query, searchDTO));
         }
 
         // POST api/<GenderController>
@@ -43,32 +35,16 @@ namespace API.Controllers
         [Authorize]
         public IActionResult Post([FromBody] GenderDTO genderDTO, [FromServices] ICreateGenderCommand command)
         {
-            try
-            {
-                _handler.HandleCommand(command, genderDTO);
-                return StatusCode(201);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            _handler.HandleCommand(command, genderDTO);
+            return StatusCode(201);
         }
 
         // PUT api/<GenderController>/5
         [HttpPut]
         public IActionResult Put ([FromBody] GenderDTO dto, [FromServices] IUpdateGenderCommand command)
         {
-            try
-            {
-                _handler.HandleCommand(command, dto);
-                return StatusCode(204);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            _handler.HandleCommand(command, dto);
+            return StatusCode(204);
         }
 
         // DELETE api/<GenderController>/5
@@ -79,16 +55,8 @@ namespace API.Controllers
             {
                 Id = id
             };
-            try
-            {
-                _handler.HandleCommand(command, dto);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            _handler.HandleCommand(command, dto);
+            return NoContent();
         }
     }
 }

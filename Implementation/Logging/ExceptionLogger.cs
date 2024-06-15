@@ -1,4 +1,9 @@
-﻿using Application.Logging;
+﻿using Application;
+using Application.Logging;
+using DataAcess;
+using Domain;
+using Implementation.UseCases;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +14,32 @@ namespace Implementation.Logging
 {
     public class ExceptionLogger : IExceptionLogger
     {
-        public void Log(Exception ex)
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+
+        public ExceptionLogger(IServiceScopeFactory serviceScopeFactory)
         {
-            Console.WriteLine("Occured at:" + DateTime.UtcNow);
-            Console.WriteLine(ex.Message);
+            _serviceScopeFactory = serviceScopeFactory;
+        }
+
+        Guid IExceptionLogger.Log(Exception ex)
+        {
+            Guid id = Guid.NewGuid();
+
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ASPContext>();
+                ErrorLog log = new ErrorLog
+                {
+                    ErrorId = id,
+                    Message = ex.Message,
+                    StrackTrace = ex.StackTrace,
+                    Time = DateTime.UtcNow
+                };
+                context.ErrorLog.Add(log);
+                context.SaveChanges();
+            }
+
+            return id;
         }
     }
 }

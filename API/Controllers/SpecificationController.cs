@@ -23,14 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult Get([FromBody] LookupSearch search, [FromServices] IGetSpecificationQuery query)
         {
-            try
-            {
-                return Ok(this.useCaseHandler.HandleQuery(query, search));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(this.useCaseHandler.HandleQuery(query, search));
         }
 
         // GET api/<SpecificationController>/5
@@ -40,32 +33,17 @@ namespace API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] SpecificationDTO specificationDTO, [FromServices] ICreateSpecificationCommand command)
         {
-            try
-            {
-                this.useCaseHandler.HandleCommand(command, specificationDTO);
-                return StatusCode(201);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            this.useCaseHandler.HandleCommand(command, specificationDTO);
+            return StatusCode(201);
         }
 
         // PUT api/<SpecificationController>/5
         [HttpPut("{id}")]
         public IActionResult Put([FromBody] SpecificationDTO dto, [FromServices] IUpdateSpecificationCommand command)
         {
-            try
-            {
-                useCaseHandler.HandleCommand(command, dto);
-                return StatusCode(203);
-            }
-           
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-    }
-}
+            useCaseHandler.HandleCommand(command, dto);
+            return StatusCode(203);
+        }
 
         // DELETE api/<SpecificationController>/5
         [HttpDelete("{id}")]
@@ -75,15 +53,8 @@ namespace API.Controllers
             {
                 Id = id
             };
-            try
-            {
-                useCaseHandler.HandleCommand(command, dto);
-                return NoContent();
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            useCaseHandler.HandleCommand(command, dto);
+            return NoContent();
 
         }
     }

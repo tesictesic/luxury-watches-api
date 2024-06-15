@@ -1,7 +1,9 @@
 ﻿using Application.DTO;
+using Application.Exceptions;
 using Application.UseCases.Commands.ProductCommands;
 using DataAcess;
 using Domain;
+using Domain.LookupTables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +25,8 @@ namespace Implementation.UseCases.Commands.Products
         public void Execute(DeleteDTO data)
         {
             Product product_obj = Context.Products.Find(data.Id);
-            if(product_obj== null) { throw new FileNotFoundException(); }
-            if (product_obj.Product_Carts.Count > 0) { throw new ArgumentException("You cannot delete this specification"); }
+            if(product_obj== null) { throw new EntityNotFoundException(nameof(Product), data.Id); }
+            if (product_obj.Product_Carts.Count > 0) { throw new ConflictException("You cannot delete this specification"); }
             Context.Products.Remove(product_obj);
             Context.SaveChanges();
         }

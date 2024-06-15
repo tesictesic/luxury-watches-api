@@ -20,16 +20,11 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult Get([FromBody] AuditLogSearchDTO searchDTO, [FromServices] IGetAuditLogQuery query)
         {
-            try
-            {
+           
                 
                 return Ok(_useCaseHandler.HandleQuery(query, searchDTO));
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            
+            
         }
     }
 }

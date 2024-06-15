@@ -35,24 +35,8 @@ namespace Implementation.UseCases.Commands.Users
             validations.ValidateAndThrow(data);
             if(data.Image != null)
             {
-                var extension = Path.GetExtension(data.Image.FileName);
-                if (!allowedExtensions.Contains(extension.ToLower()))
-                {
-                    throw new ArgumentException();
-                }
-                var fileName = Guid.NewGuid().ToString() + extension;
-                if (Path.Exists(fileName))
-                {
-                    return;
-                }
-                else
-                {
-                    var savePath = Path.Combine("wwwroot", "users", fileName);
-                    using var fs = new FileStream(savePath, FileMode.Create);
-                    data.Image.CopyTo(fs);
-                    profile_path = "/users/" + fileName;
-                }
-                
+                 profile_path = PictureUpload.Upload(data.Image, "users");
+
             }
             User user = new User
             {

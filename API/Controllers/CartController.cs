@@ -22,29 +22,14 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult Get([FromBody]CartSearchDTO dto, [FromServices] IGetCartQuery query)
         {
-            try
-            {
-                return Ok(_useCaseHandler.HandleQuery(query, dto));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(_useCaseHandler.HandleQuery(query, dto));
         }
         [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] CartDTO dTO,ICreateCartCommand command)
         {
-            try
-            {
-                _useCaseHandler.HandleCommand(command,dTO);
-                return StatusCode(201);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return BadRequest(ex.Message);
-            }
+            _useCaseHandler.HandleCommand(command, dTO);
+            return StatusCode(201);
         }
 
         

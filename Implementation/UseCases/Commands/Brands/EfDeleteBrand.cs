@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.Exceptions;
 using Application.UseCases.Commands.BrandsCommands;
 using DataAcess;
 using Domain.LookupTables;
@@ -23,8 +24,8 @@ namespace Implementation.UseCases.Commands.Brands
         public void Execute(DeleteDTO data)
         {
             Brand brand_obj = Context.Brands.Find(data.Id);
-            if (brand_obj == null) { throw new FileNotFoundException(); }
-            if(brand_obj.Products.Count > 0) { throw new ArgumentException("You cannot delete this brand"); }
+            if (brand_obj == null) { throw new EntityNotFoundException(nameof(Brand),data.Id); }
+            if(brand_obj.Products.Count > 0) { throw new ConflictException("You cannot delete this brand"); }
             Context.Brands.Remove(brand_obj);
             Context.SaveChanges();
         }

@@ -23,45 +23,23 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult Get([FromBody] LookupSearch search, [FromServices] IGetColorQuery query)
         {
-            try
-            {
-                return Ok(_useCaseHandler.HandleQuery(query, search));
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(_useCaseHandler.HandleQuery(query, search));
         }
         // POST api/<ColorController>
         [HttpPost]
         public IActionResult Post([FromBody] ColorDTO dTO, [FromServices] ICreateColorCommand command)
         {
-            try
-            {
-                _useCaseHandler.HandleCommand(command, dTO);
-                return StatusCode(201);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _useCaseHandler.HandleCommand(command, dTO);
+            return StatusCode(201);
         }
 
         // PUT api/<ColorController>/5
         [HttpPut("{id}")]
         public IActionResult Put([FromBody] ColorDTO dto, [FromServices] IUpdateColorCommand command)
         {
-            try
-            {
-                _useCaseHandler.HandleCommand(command, dto);
-                return StatusCode(203);
-            }
-            
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-    }
-}
+            _useCaseHandler.HandleCommand(command, dto);
+            return StatusCode(203);
+        }
 
         // DELETE api/<ColorController>/5
         [HttpDelete("{id}")]
@@ -71,15 +49,8 @@ namespace API.Controllers
             {
                 Id = id
             };
-            try
-            {
-                _useCaseHandler.HandleCommand(command, dto);
-                return NoContent();
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _useCaseHandler.HandleCommand(command, dto);
+            return NoContent();
         }
     }
 }

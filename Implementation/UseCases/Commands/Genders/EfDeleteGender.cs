@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.Exceptions;
 using Application.UseCases.Commands.GenderCommands;
 using DataAcess;
 using Domain.LookupTables;
@@ -23,8 +24,8 @@ namespace Implementation.UseCases.Commands.Genders
         public void Execute(DeleteDTO data)
         {
             Gender gender_obj = Context.Genders.Find(data.Id);
-            if (gender_obj == null) { throw new FileNotFoundException(); }
-            if (gender_obj.Products.Count > 0) { throw new ArgumentException("You cannot delete this brand"); }
+            if (gender_obj == null) { throw new EntityNotFoundException(nameof(Gender), data.Id); }
+            if (gender_obj.Products.Count > 0) { throw new ConflictException("You cannot delete this brand"); }
             Context.Genders.Remove(gender_obj);
             Context.SaveChanges();
         }

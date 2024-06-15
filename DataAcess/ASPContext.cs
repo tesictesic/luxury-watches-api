@@ -66,5 +66,6 @@ namespace DataAcess
         public DbSet<Product_Cart> Product_Carts { get; set;}
         public DbSet<UserUseCase> UserUseCases { get; set; }
         public DbSet<UserUseCaseLog> UserUseCaseLogs { get; set; }
+        public DbSet<ErrorLog> ErrorLog { get; set; }
     }
 }

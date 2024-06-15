@@ -38,6 +38,7 @@ namespace Implementation
                     return new UnathorizedActor();
                 }
                 var userIdClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "UserId");
+                int userIdClaimInt = userIdClaim != null ? Convert.ToInt32(userIdClaim.Value) : 0;
                 var userFirstName = jwtToken.Claims.FirstOrDefault(c => c.Type == "FirstName");
                 var userLasttName = jwtToken.Claims.FirstOrDefault(c => c.Type == "LastName");
                 var userEmail = jwtToken.Claims.FirstOrDefault(c => c.Type == "Email");
@@ -46,6 +47,7 @@ namespace Implementation
                 if(userIdClaim == null) return new UnathorizedActor();
                 return new Actor
                 {
+                    Id=userIdClaimInt,
                     FirstName = userFirstName.Value,
                     LastName = userLasttName.Value,
                     Email = userEmail.Value,

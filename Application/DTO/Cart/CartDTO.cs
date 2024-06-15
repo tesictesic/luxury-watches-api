@@ -8,7 +8,6 @@ namespace Application.DTO.Cart
 {
     public class CartDTO : BaseDTO
     {
-        public int UserId { get; set; }
         public IEnumerable<ProductCartDTO> ProductCarts { get; set; }
     }
 }

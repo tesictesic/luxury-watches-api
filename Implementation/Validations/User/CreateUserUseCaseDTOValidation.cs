@@ -8,14 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Implementation.Validations
+namespace Implementation.Validations.User
 {
-    public class CreateUserUseCaseDTOValidation:AbstractValidator<UserUseCaseDTO>
+    public class CreateUserUseCaseDTOValidation : AbstractValidator<UserUseCaseDTO>
     {
         private readonly ASPContext _context;
         public CreateUserUseCaseDTOValidation(ASPContext context)
         {
-            this._context = context;
+            _context = context;
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
             RuleFor(x => x.UserId).NotEmpty()
@@ -34,6 +34,6 @@ namespace Implementation.Validations
 
 
         }
-       
+
     }
 }

@@ -3,7 +3,7 @@ using Application.UseCases.Commands.UseUserCaseCommands;
 using DataAcess;
 using Domain;
 using FluentValidation;
-using Implementation.Validations;
+using Implementation.Validations.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;

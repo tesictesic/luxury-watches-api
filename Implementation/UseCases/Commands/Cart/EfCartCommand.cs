@@ -5,7 +5,7 @@ using DataAcess;
 using Domain;
 using Domain.Join_Tables;
 using FluentValidation;
-using Implementation.Validations;
+using Implementation.Validations.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -5,7 +5,7 @@ using Application.UseCases.Commands.UserCommands;
 using DataAcess;
 using Domain;
 using FluentValidation;
-using Implementation.Validations;
+using Implementation.Validations.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;

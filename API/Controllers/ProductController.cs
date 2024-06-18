@@ -49,7 +49,7 @@ namespace API.Controllers
         // POST api/<ProductController>
         [Authorize]
         [HttpPost]
-        public IActionResult Post([FromForm] ProductDTO dto,ICreateProductCommand command)
+        public IActionResult Post([FromForm] ProductDTO dto,[FromServices]ICreateProductCommand command)
         {
             
             
@@ -60,9 +60,12 @@ namespace API.Controllers
         }
 
         // PUT api/<ProductController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [Authorize]
+        [HttpPut]
+        public IActionResult Put([FromForm] ProductDTO dto, [FromServices]IUpdateProductCommande command)
         {
+            useCaseHandler.HandleCommand(command,dto);
+            return StatusCode(203);
         }
 
         // DELETE api/<ProductController>/5

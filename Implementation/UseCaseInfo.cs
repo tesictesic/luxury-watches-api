@@ -22,6 +22,6 @@ namespace Implementation
             }
         }
 
-        public static int MaxUseCaseId => 27;
+        public static int MaxUseCaseId => 28;
     }
 }

@@ -4,7 +4,7 @@ using DataAcess;
 using Domain;
 using Domain.Join_Tables;
 using FluentValidation;
-using Implementation.Validations;
+using Implementation.Validations.Products;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,8 +16,8 @@ namespace Implementation.UseCases.Commands.Products
 {
     public class EfCreateProduct : EfUseCase, ICreateProductCommand
     {
-        private ProductDTOValidation _validation;
-        public EfCreateProduct(ProductDTOValidation validations, ASPContext context) : base(context)
+        private CreateProductDTOValidation _validation;
+        public EfCreateProduct(CreateProductDTOValidation validations, ASPContext context) : base(context)
         {
             this._validation = validations;
         }

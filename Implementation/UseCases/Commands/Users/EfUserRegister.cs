@@ -38,6 +38,10 @@ namespace Implementation.UseCases.Commands.Users
                  profile_path = PictureUpload.Upload(data.Image, "users");
 
             }
+            else
+            {
+                profile_path = "/users/user.png";
+            }
             User user = new User
             {
                 First_Name = data.First_Name,

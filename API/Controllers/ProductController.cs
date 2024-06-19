@@ -22,6 +22,7 @@ namespace API.Controllers
             this.useCaseHandler= handler;
         }
         // GET: api/<ProductController>
+       
         [HttpGet]
         public IActionResult Get([FromBody] ProductSearchDTO dto, [FromServices] IGetProductQuery query)
         {

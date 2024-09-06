@@ -51,7 +51,7 @@ namespace API.Core
                         audience: "Any",
                         claims: claims,
                         notBefore: now,
-                        expires: now.AddSeconds(600),
+                        expires: now.AddSeconds(36000),
                         signingCredentials: credentials
                         );
                     var tokenId = new Guid(claims.First(x => x.Type == JwtRegisteredClaimNames.Jti).Value);

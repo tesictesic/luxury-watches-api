@@ -52,7 +52,7 @@ namespace Implementation.UseCases.Commands.Users
       
                 
             };
-            Context.Add(user);
+            Context.Users.Add(user);
             Context.SaveChanges();
             EmailDTO email = new EmailDTO
             {
@@ -60,7 +60,7 @@ namespace Implementation.UseCases.Commands.Users
                 Content = "<h1>Successfull registration!</h1>",
                 SendTo=data.Email
             };
-            emailSender.SendEmail(email);
+            //emailSender.SendEmail(email);
         }
     }
 }

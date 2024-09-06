@@ -16,6 +16,7 @@ namespace Application.DTO.Searches
         public int? Specification_Id { get; set; }
         public int? Color_Id { get; set; }
         public string? OrderBy { get; set; }
+        public int page { get; set; } = 1;
 
     }
 }

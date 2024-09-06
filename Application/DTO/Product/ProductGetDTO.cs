@@ -14,8 +14,9 @@ namespace Application.DTO.Product
         public string ProductPictureSrc { get; set; }
         public decimal ProductPrice { get; set; }
         public string BrandName { get; set; }
+        public string BrandDescription { get; set; }
         public string GenderName { get; set; }
-        public IEnumerable<ProductSpecificationDTO> ProductSpecifications { get; set; }
+        public IEnumerable<ProductSpecificationGetDTO> ProductSpecifications { get; set; }
         public IEnumerable<ColorDTOProduct> Colors { get; set; }
 
     }

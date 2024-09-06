@@ -22,9 +22,9 @@ namespace API.Controllers
         }
 
         // GET: api/<BrandController>
-        [Authorize]
+        
         [HttpGet]
-        public IActionResult Get([FromBody] LookupSearch search, [FromServices] IGetBrandQuery query)
+        public IActionResult Get([FromQuery] LookupSearch search, [FromServices] IGetBrandQuery query)
         {
            
             
@@ -34,7 +34,7 @@ namespace API.Controllers
            
         }
         // POST api/<BrandController>
-        [Authorize]
+        
         [HttpPost]
         public IActionResult Post([FromBody] BrandDTO dto, [FromServices] ICreateBrandCommand command)
         {

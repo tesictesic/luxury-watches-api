@@ -67,5 +67,6 @@ namespace DataAcess
         public DbSet<UserUseCase> UserUseCases { get; set; }
         public DbSet<UserUseCaseLog> UserUseCaseLogs { get; set; }
         public DbSet<ErrorLog> ErrorLog { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
     }
 }

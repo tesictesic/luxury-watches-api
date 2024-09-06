@@ -15,7 +15,7 @@ namespace DataAcess.Configurations
         {
             builder.Property(x => x.UseCaseName).HasMaxLength(100);
             builder.Property(x=>x.UserName).HasMaxLength(100);
-            builder.Property(x => x.UserCaseData).HasMaxLength(400);
+            builder.Property(x=>x.UserCaseData).HasMaxLength(1000);
 
             builder.HasIndex(x => new { x.UserName, x.UseCaseName }).IncludeProperties(x => x.UserCaseData);
         }

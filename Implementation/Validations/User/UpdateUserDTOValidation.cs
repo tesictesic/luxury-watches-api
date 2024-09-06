@@ -10,7 +10,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Implementation.Validations.User
 {
-    public class UpdateUserDTOValidation : AbstractValidator<RegisterDTO>
+    public class UpdateUserDTOValidation : AbstractValidator<UpdateUser>
     {
         public UpdateUserDTOValidation(ASPContext context)
         {
@@ -26,9 +26,6 @@ namespace Implementation.Validations.User
 
             RuleFor(x => x.First_Name).NotEmpty().MinimumLength(3).WithMessage("First name need to have just 3 character or more");
             RuleFor(x => x.Last_Name).NotEmpty().MinimumLength(3).WithMessage("Last name need to have just 3 character or more");
-
-            RuleFor(x => x.Password).NotEmpty().Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")
-                .WithMessage("Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:");
         }
     }
 }

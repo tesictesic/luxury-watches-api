@@ -23,15 +23,23 @@ namespace API.Controllers
         // GET: api/<UserController>
         [Authorize]
         [HttpGet]
-        public IActionResult Get([FromBody] UserSerachDTO dto, [FromServices] IGetUserQuery query)
+        public IActionResult Get([FromQuery] UserSerachDTO dto, [FromServices] IGetUserQuery query)
         {
             return Ok(_useCaseHandler.HandleQuery(query, dto));
         }
 
 
+        [HttpGet("{id}")]
+        public IActionResult Get(int id, [FromServices] IGetOneUser query)
+        {
+            
+            return Ok(this._useCaseHandler.HandleQuery(query, id));
+        }
+
+
+
 
         // POST api/<UserController>
-        [Authorize]
         [HttpPost]
         public IActionResult Post([FromForm] RegisterDTO registerDTO, [FromServices] IUserRegisterCommand command)
         {
@@ -42,7 +50,7 @@ namespace API.Controllers
         // PUT api/<UserController>/5
         [Authorize]
         [HttpPut]
-        public IActionResult Put([FromForm] RegisterDTO dto, [FromServices] IUserUpdateCommand command)
+        public IActionResult Put([FromForm] UpdateUser dto, [FromServices] IUserUpdateCommand command)
         {
             this._useCaseHandler.HandleCommand(command, dto);
             return StatusCode(204);

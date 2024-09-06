@@ -9,6 +9,6 @@ namespace Application.DTO.Searches
     public abstract class BaseSearchDTO
     {
         
-        public int pageSize { get; set; } = 5;
+        public int pageSize { get; set; } = 9;
     }
 }

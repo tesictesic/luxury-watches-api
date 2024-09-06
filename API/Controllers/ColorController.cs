@@ -21,9 +21,9 @@ namespace API.Controllers
             this._useCaseHandler = handler;
         }
         // GET: api/<ColorController>
-        [Authorize]
+        
         [HttpGet]
-        public IActionResult Get([FromBody] LookupSearch search, [FromServices] IGetColorQuery query)
+        public IActionResult Get([FromQuery] LookupSearch search, [FromServices] IGetColorQuery query)
         {
             return Ok(_useCaseHandler.HandleQuery(query, search));
         }
@@ -38,7 +38,7 @@ namespace API.Controllers
 
         // PUT api/<ColorController>/5
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut]
         public IActionResult Put([FromBody] ColorDTO dto, [FromServices] IUpdateColorCommand command)
         {
             _useCaseHandler.HandleCommand(command, dto);

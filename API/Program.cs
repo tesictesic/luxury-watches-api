@@ -5,6 +5,7 @@ using Application.Logging;
 using Application.UseCases.Commands.BrandsCommands;
 using Application.UseCases.Commands.CartCommands;
 using Application.UseCases.Commands.ColorCommands;
+using Application.UseCases.Commands.ContactCommands;
 using Application.UseCases.Commands.GenderCommands;
 using Application.UseCases.Commands.ProductCommands;
 using Application.UseCases.Commands.SpecificationCommands;
@@ -18,6 +19,7 @@ using Implementation.Logging;
 using Implementation.UseCases.Commands.Brands;
 using Implementation.UseCases.Commands.Cart;
 using Implementation.UseCases.Commands.Colors;
+using Implementation.UseCases.Commands.Contacts;
 using Implementation.UseCases.Commands.Genders;
 using Implementation.UseCases.Commands.Products;
 using Implementation.UseCases.Commands.Specifications;
@@ -26,6 +28,7 @@ using Implementation.UseCases.Commands.UserUseCases;
 using Implementation.UseCases.Queries;
 using Implementation.Validations.Brand;
 using Implementation.Validations.Color;
+using Implementation.Validations.Contact;
 using Implementation.Validations.Gender;
 using Implementation.Validations.Products;
 using Implementation.Validations.Specification;
@@ -105,8 +108,16 @@ builder.Services.AddTransient<IGetCartQuery, EfGetCart>();
 builder.Services.AddTransient<ICreateCartCommand, EfCartCommand>();
 builder.Services.AddTransient<ICreateUserUseCaseCommand, EfCreateUseUserCase>();
 builder.Services.AddTransient<IDeleteUserUseCaseCommand, EfDeleteUseUserCase>();
+builder.Services.AddTransient<IGetOneUser,EfGetOneUser>();
 builder.Services.AddTransient<CreateUserUseCaseDTOValidation>();
 builder.Services.AddTransient<CartDTOValidation>();
+builder.Services.AddTransient<ICreateContact, EfCreateContact>();
+builder.Services.AddTransient<IGetContactQuery, EfGetContactQuery>();
+builder.Services.AddTransient<CreateContactValidator>();
+
+
+
+
 builder.Services.AddTransient<JWTManager>();
 
 builder.Services.AddAuthentication(options =>
@@ -130,10 +141,21 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 });
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200")
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+
+app.UseCors("AllowLocalhost");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -142,6 +164,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 app.Use(async (context, next) =>

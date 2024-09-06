@@ -33,10 +33,11 @@ namespace Implementation.UseCases.Queries
                 ProductPictureSrc = product_obj.Src,
                 ProductPrice = product_obj.Product_Prices.Select(x => x.Price).First(),
                 BrandName = product_obj.Brand.Name,
+                BrandDescription=product_obj.Brand.Description,
                 GenderName = product_obj.Gender.Name,
-                ProductSpecifications = product_obj.Product_Specifications.Select(x => new ProductSpecificationDTO
+                ProductSpecifications = product_obj.Product_Specifications.Select(x => new ProductSpecificationGetDTO
                 {
-                    SpecificationId = x.Specification_id,
+                    SpecificationName = x.Specification.Name,
                     SpecificationValue = x.Value,
                 }),
                 Colors = product_obj.ProductColors.Select(x => new ColorDTOProduct

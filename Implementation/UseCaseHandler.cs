@@ -29,7 +29,7 @@ namespace Implementation
         //vazi za bilo koju komandu, podaci koji ulaze;
         public void HandleCommand<TData>(ICommand<TData> command , TData data)
         {
-            CheckActorUsesCases(command);
+           CheckActorUsesCases(command);
             
             try
             {

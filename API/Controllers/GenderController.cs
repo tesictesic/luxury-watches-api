@@ -24,7 +24,7 @@ namespace API.Controllers
         // GET: api/<GenderController>
 
         [HttpGet]
-        [Authorize]
+        
         public IActionResult Get([FromQuery] LookupSearch searchDTO, [FromServices] IGetGenderQuery query)
         {
             return Ok(_handler.HandleQuery(query, searchDTO));

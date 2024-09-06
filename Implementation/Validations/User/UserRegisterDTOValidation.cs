@@ -26,8 +26,8 @@ namespace Implementation.Validations.User
             RuleFor(x => x.First_Name).NotEmpty().MinimumLength(3).WithMessage("First name need to have just 3 character or more");
             RuleFor(x => x.Last_Name).NotEmpty().MinimumLength(3).WithMessage("Last name need to have just 3 character or more");
 
-            RuleFor(x => x.Password).NotEmpty().Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")
-                .WithMessage("Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:");
+            RuleFor(x => x.Password).NotEmpty().Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")
+                .WithMessage("The password must contain at least 8 characters. At least one lowercase, uppercase letter, number and special character");
 
 
         }

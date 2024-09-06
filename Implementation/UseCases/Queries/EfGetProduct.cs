@@ -47,15 +47,16 @@ namespace Implementation.UseCases.Queries
             }
             if(search.PriceFrom.HasValue)
             {
-                query=query.Where(x=>x.Product_Prices.Any(y=>y.Price>=search.PriceFrom && y.DateTo!=null));
+                query=query.Where(x=>x.Product_Prices.Any(y=>y.Price>=search.PriceFrom));
             }
             if(search.PriceTo.HasValue)
             {
-                query = query.Where(x => x.Product_Prices.Any(y => y.Price <= search.PriceTo && y.DateTo != null));
+                query = query.Where(x => x.Product_Prices.Any(y => y.Price <= search.PriceTo));
             }
             if (!string.IsNullOrEmpty(search.OrderBy))
             {
                 if(search.OrderBy=="Name A-Z") {
+
                     query = query.OrderBy(x => x.Name);
                 }
                 else if(search.OrderBy=="Name Z-A")
@@ -74,7 +75,7 @@ namespace Implementation.UseCases.Queries
             
             int pageSize = search.pageSize > 5 ? search.pageSize : 5;
             int totalItems = query.Count();
-            int page = 1;
+            int page = search.page;
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
             var data = query.Skip((page - 1) * pageSize)
                     .Take(pageSize).Select(x => new ProductGetDTO
@@ -85,10 +86,11 @@ namespace Implementation.UseCases.Queries
                         ProductPictureSrc=x.Src,
                         ProductPrice=x.Product_Prices.Select(x=>x.Price).First(),
                         BrandName=x.Brand.Name,
+                        BrandDescription=x.Brand.Description,
                         GenderName=x.Gender.Name,
-                        ProductSpecifications=x.Product_Specifications.Select(x=>new ProductSpecificationDTO
+                        ProductSpecifications=x.Product_Specifications.Select(x=>new ProductSpecificationGetDTO
                         {
-                            SpecificationId=x.Id,
+                            SpecificationName=x.Specification.Name,
                             SpecificationValue=x.Value,
                         }),
                         Colors=x.ProductColors.Select(x=>new ColorDTOProduct

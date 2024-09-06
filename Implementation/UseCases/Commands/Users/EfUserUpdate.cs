@@ -26,7 +26,7 @@ namespace Implementation.UseCases.Commands.Users
 
         public string Name => this.GetType().Name;
 
-        public void Execute(RegisterDTO data)
+        public void Execute(UpdateUser data)
         {
             User user_obj=Context.Users.Find(data.Id);
             if (user_obj == null)
@@ -43,7 +43,6 @@ namespace Implementation.UseCases.Commands.Users
             user_obj.First_Name = data.First_Name;
             user_obj.Last_Name=data.Last_Name;
             user_obj.Email = data.Email;
-            user_obj.Password = BCrypt.Net.BCrypt.HashPassword(data.Password);
             user_obj.Picture = file_path;
 
             Context.SaveChanges();

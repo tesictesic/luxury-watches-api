@@ -1,4 +1,5 @@
 ﻿using Application.DTO.Lookup;
+using Application.Exceptions;
 using Application.UseCases.Commands.BrandsCommands;
 using DataAcess;
 using Domain.LookupTables;
@@ -26,7 +27,11 @@ namespace Implementation.UseCases.Commands.Brands
         public void Execute(BrandDTO data)
         {
             validations.ValidateAndThrow(data);
-            EfLookupTable.Update<Brand>(Context, data);
+            var brand_obj=this.Context.Brands.Find(data.Id);
+            if (brand_obj == null) throw new EntityNotFoundException("That entity doesn't exist",data.Id);
+            brand_obj.Name = data.Name;
+            brand_obj.Description = data.Description;
+            Context.SaveChanges();
         }
     }
 }

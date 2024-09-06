@@ -24,7 +24,7 @@ namespace API.Controllers
         // GET: api/<ProductController>
        
         [HttpGet]
-        public IActionResult Get([FromBody] ProductSearchDTO dto, [FromServices] IGetProductQuery query)
+        public IActionResult Get([FromQuery] ProductSearchDTO dto, [FromServices] IGetProductQuery query)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace API.Controllers
         }
 
         // POST api/<ProductController>
-        [Authorize]
+        
         [HttpPost]
         public IActionResult Post([FromForm] ProductDTO dto,[FromServices]ICreateProductCommand command)
         {

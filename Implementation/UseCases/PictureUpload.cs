@@ -31,7 +31,7 @@ namespace Implementation.UseCases
                 using var fs = new FileStream(savePath, FileMode.Create);
                 image.CopyTo(fs);
 
-                return $"/{folderPath}/{fileName}";
+                return $"\\{folderPath}\\{fileName}";
             
             
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Commands.UserCommands
 {
-    public interface IUserUpdateCommand:ICommand<RegisterDTO>
+    public interface IUserUpdateCommand:ICommand<UpdateUser>
     {
     }
 }

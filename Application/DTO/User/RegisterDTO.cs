@@ -13,6 +13,13 @@ namespace Application.DTO.User
         public string Last_Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public IFormFile? Image { get; set; }
+    }
+    public class UpdateUser : BaseDTO
+    {
+        public string First_Name { get; set; }
+        public string Last_Name { get; set; }
+        public string Email { get; set; }
         public IFormFile Image { get; set; }
     }
 }

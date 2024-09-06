@@ -28,10 +28,13 @@ namespace Implementation.UseCases.Commands.Products
 
         public void Execute(ProductDTO data)
         {
+            
             _validation.ValidateAndThrow(data);
-            var colors = JsonConvert.DeserializeObject<List<int>>(data.ProductColors);
+            
+           
+            
             // Deserializacija JSON stringa u listu ProductSpecificationDTO objekata
-            var Specifications = JsonConvert.DeserializeObject<List<ProductSpecificationDTO>>(data.ProductSpecifications);
+           
 
             List<string> allowedExtensions = new List<string> { ".png", ".jpg", ".jpeg" };
            
@@ -52,27 +55,46 @@ namespace Implementation.UseCases.Commands.Products
                     Product_id = product.Id,
                 };
                 Context.Product_Prices.Add(price);
-                foreach (int color in colors)
+            if (!string.IsNullOrEmpty(data.ProductColors))
+            {
+                var colors = JsonConvert.DeserializeObject<List<int>>(data.ProductColors);
+                if (colors != null)
                 {
-                    Product_Color product_color = new Product_Color
+                    foreach (int color in colors)
                     {
-                        Color_id = color,
-                        Product_id = product.Id,
-                    };
-                Context.Product_Colors.Add(product_color);
-            }
-                
-            foreach (var specification in Specifications)
-                {
-                    Product_Specification product_Specification = new Product_Specification
-                    {
-                        Product_id = product.Id,
-                        Specification_id = specification.SpecificationId,
-                        Value = specification.SpecificationValue,
-                    };
-                    Context.Product_Specifications.Add(product_Specification);
+                        Product_Color product_color = new Product_Color
+                        {
+                            Color_id = color,
+                            Product_id = product.Id,
+                        };
+                        Context.Product_Colors.Add(product_color);
+                    }
                 }
-               Context.SaveChanges();
+
+            }
+            if (!string.IsNullOrEmpty(data.ProductSpecifications))
+            {
+                var Specifications = JsonConvert.DeserializeObject<List<ProductSpecificationDTO>>(data.ProductSpecifications);
+                if (Specifications != null)
+                {
+                    foreach (var specification in Specifications)
+                    {
+                        Product_Specification product_Specification = new Product_Specification
+                        {
+                            Product_id = product.Id,
+                            Specification_id = specification.SpecificationId,
+                            Value = specification.SpecificationValue,
+                        };
+                        Context.Product_Specifications.Add(product_Specification);
+                    }
+                }
+            }
+
+
+
+
+
+            Context.SaveChanges();
             }
     }
 }

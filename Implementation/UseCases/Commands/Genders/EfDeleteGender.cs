@@ -25,7 +25,7 @@ namespace Implementation.UseCases.Commands.Genders
         {
             Gender gender_obj = Context.Genders.Find(data.Id);
             if (gender_obj == null) { throw new EntityNotFoundException(nameof(Gender), data.Id); }
-            if (gender_obj.Products.Count > 0) { throw new ConflictException("You cannot delete this brand"); }
+            if (gender_obj.Products.Count > 0) { throw new ConflictException("You cannot delete this gender"); }
             Context.Genders.Remove(gender_obj);
             Context.SaveChanges();
         }

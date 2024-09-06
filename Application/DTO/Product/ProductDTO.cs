@@ -16,7 +16,7 @@ namespace Application.DTO.Product
 
         public int BrandId { get; set; }
         public int GenderId { get; set; }
-        public string ProductSpecifications { get; set; }
-        public string ProductColors { get; set; }
+        public string? ProductSpecifications { get; set; }
+        public string? ProductColors { get; set; }
     }
 }

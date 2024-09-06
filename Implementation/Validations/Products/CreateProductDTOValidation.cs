@@ -30,10 +30,10 @@ namespace Implementation.Validations.Products
                                             .WithMessage("You have to fill in product description")
                                             .MinimumLength(30)
                                             .WithMessage("Minimum length of product description must be 30 char");
-            RuleFor(x => x.ProductColors).NotEmpty()
-                                       .WithMessage("You have to choose colors for product")
-                                       .Must(BeAValidColorList)
-                                       .WithMessage("Your colors must be from colors table");
+            //RuleFor(x => x.ProductColors).NotEmpty()
+            //                           .WithMessage("You have to choose colors for product");
+            //                           //.Must(BeAValidColorList)
+            //                           //.WithMessage("Your colors must be from colors table");
             RuleFor(x => x.BrandId).NotEmpty()
                                   .WithMessage("You have to choose brand for product")
                                   .Must(brand => _context.Brands.Any(y => y.Id == brand))
@@ -42,10 +42,10 @@ namespace Implementation.Validations.Products
                                   .WithMessage("You have to choose gender for product")
                                   .Must(brand => _context.Genders.Any(y => y.Id == brand))
                                   .WithMessage("Your gender is not valid gender");
-            RuleFor(x => x.ProductSpecifications).NotEmpty()
-                                       .WithMessage("You have to choose colors for product")
-                                       .Must(BeAValidSpecificationList)
-                                       .WithMessage("Your colors must be from colors table");
+            //RuleFor(x => x.ProductSpecifications).NotEmpty()
+            //                           .WithMessage("You have to choose colors for product");
+            //                           //.Must(BeAValidSpecificationList)
+            //                           //.WithMessage("Your colors must be from colors table");
 
 
 
